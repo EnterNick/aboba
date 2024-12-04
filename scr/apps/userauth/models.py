@@ -1,3 +1,23 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
+
+def path_to_img(user, filename):
+    return f'user_{user.id}/{filename}'
+
+
+class CustomUser(AbstractUser):
+    class Meta:
+        db_table = 'auth_user'
+
+    avatar = models.ImageField(
+        verbose_name='Аватар',
+        default='media/profile.png',
+        upload_to=path_to_img,
+    )
+
+    REQUIRED_FIELDS = [
+        'email',
+        'password',
+        'first_name',
+    ]
