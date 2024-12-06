@@ -11,4 +11,5 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'avatar',
             'date_joined',
+            'cart',
         ]
