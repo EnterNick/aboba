@@ -18,3 +18,5 @@ class Good(models.Model):
     cart = models.ManyToManyField(get_user_model(), related_name='cart', blank=True)
 
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
+
+    category = models.CharField(max_length=100, null=True, blank=True)
