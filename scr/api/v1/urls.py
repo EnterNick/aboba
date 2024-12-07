@@ -1,14 +1,19 @@
 from django.urls import path, include
 
-from .userauth.views import UsersView, UserRegistrationView, LoginView, UserProfileView, UserCartView
+from .user_auth.views import UsersView, UserRegistrationView, LoginView
 from .catalog.views import GoodsView, SingleGoodView, CreateGoodView, AddToCartView
+from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 
 user_urlpatterns = [
     path('', UsersView.as_view(), name='all_users'),
     path('registration/', UserRegistrationView.as_view(), name='registration'),
     path('login/', LoginView.as_view(), name='login'),
-    path('profile/', UserProfileView.as_view(), name='profile'),
-    path('profile/cart/', UserCartView.as_view(), name='user_cart'),
+]
+
+profile_urlpatterns = [
+    path('', UserProfileView.as_view(), name='profile'),
+    path('cart/', UserCartView.as_view(), name='user_cart'),
+    path('update/', UserUpdateView.as_view(), name='profile_update'),
 ]
 
 goods_urlpatterns = [
@@ -21,4 +26,5 @@ goods_urlpatterns = [
 urlpatterns = [
     path('users/', include(user_urlpatterns)),
     path('catalog/', include(goods_urlpatterns)),
+    path('profile/', include(profile_urlpatterns)),
 ]

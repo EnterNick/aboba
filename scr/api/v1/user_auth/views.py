@@ -1,12 +1,11 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers.modelSerializers import UserSerializer
 from .serializers.requestSerializers import LoginRequestSerializer, RegistrationRequestSerializer
-from .serializers.responseSerializers import UserObtainTokenSerializer, UserCartSerializer
+from .serializers.responseSerializers import UserObtainTokenSerializer
 
 
 class UsersView(ListAPIView):
@@ -35,21 +34,3 @@ class LoginView(APIView):
         token_serializer.is_valid(raise_exception=True)
 
         return Response(data=token_serializer.data, status=200)
-
-
-class UserProfileView(RetrieveAPIView):
-    queryset = get_user_model().objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        return self.request.user
-
-
-class UserCartView(RetrieveAPIView):
-    serializer_class = UserCartSerializer
-    queryset = get_user_model().objects.all()
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        return self.request.user
