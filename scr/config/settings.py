@@ -26,10 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.userauth',
+    'apps.user_auth',
     'rest_framework',
     'apps.catalog',
     'django_filters',
+    'apps.user_profile',
 ]
 
 MIDDLEWARE = [
@@ -115,11 +116,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'userauth.CustomUser'
+AUTH_USER_MODEL = 'user_auth.CustomUser'
 
 MEDIA_URL = 'media/'
 
-MEDIA_ROOT = BASE_DIR / 'apps/userauth/media/'
+MEDIA_ROOT = BASE_DIR / 'apps/user_auth/media/'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
