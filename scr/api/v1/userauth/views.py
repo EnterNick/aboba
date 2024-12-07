@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from .serializers.modelSerializers import UserSerializer
 from .serializers.requestSerializers import LoginRequestSerializer, RegistrationRequestSerializer
-from .serializers.responseSerializers import UserObtainTokenSerializer
+from .serializers.responseSerializers import UserObtainTokenSerializer, UserCartSerializer
 
 
 class UsersView(ListAPIView):
@@ -40,6 +40,15 @@ class LoginView(APIView):
 class UserProfileView(RetrieveAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+
+class UserCartView(RetrieveAPIView):
+    serializer_class = UserCartSerializer
+    queryset = get_user_model().objects.all()
     permission_classes = [IsAuthenticated]
 
     def get_object(self):

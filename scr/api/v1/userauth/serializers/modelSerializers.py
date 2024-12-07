@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
+    cart = serializers.SlugRelatedField('title', read_only=True, many=True)
 
     class Meta:
         model = get_user_model()
@@ -11,4 +12,5 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'avatar',
             'date_joined',
+            'cart',
         ]
