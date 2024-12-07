@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from .user_auth.views import UsersView, UserRegistrationView, LoginView
 from .catalog.views import GoodsView, SingleGoodView, CreateGoodView, AddToCartView
-from .user_profile.views import UserProfileView, UserCartView
+from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 
 user_urlpatterns = [
     path('', UsersView.as_view(), name='all_users'),
@@ -13,6 +13,7 @@ user_urlpatterns = [
 profile_urlpatterns = [
     path('', UserProfileView.as_view(), name='profile'),
     path('cart/', UserCartView.as_view(), name='user_cart'),
+    path('update/', UserUpdateView.as_view(), name='profile_update'),
 ]
 
 goods_urlpatterns = [

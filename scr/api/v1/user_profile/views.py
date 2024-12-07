@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers.modelSerializer import UserSerializer
@@ -17,6 +17,15 @@ class UserProfileView(RetrieveAPIView):
 
 class UserCartView(RetrieveAPIView):
     serializer_class = UserCartSerializer
+    queryset = get_user_model().objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+
+class UserUpdateView(RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
     queryset = get_user_model().objects.all()
     permission_classes = [IsAuthenticated]
 

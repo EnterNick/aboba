@@ -49,4 +49,7 @@ class AddToCartView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
+        order = self.get_object()
+        order.good.orders += 1
+        order.good.save()
         return redirect('user_cart')
