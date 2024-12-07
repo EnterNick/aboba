@@ -15,8 +15,20 @@ class Good(models.Model):
 
     value = models.IntegerField()
 
-    cart = models.ManyToManyField(get_user_model(), related_name='cart', blank=True)
+    cart = models.ManyToManyField(get_user_model(), through='Order', related_name='cart', blank=True)
 
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
 
     category = models.CharField(max_length=100, null=True, blank=True)
+
+    orders = models.IntegerField(default=0)
+
+
+class Order(models.Model):
+    good = models.ForeignKey(Good, on_delete=models.CASCADE)
+
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+    value = models.IntegerField(default=1)
+
+    destination = models.CharField(max_length=1000)
