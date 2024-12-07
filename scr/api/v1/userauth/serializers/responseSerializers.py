@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
+from scr.api.v1.catalog.serializers.modelSerializer import GoodSerializer
+
 
 class UserObtainTokenSerializer(serializers.Serializer):
     access = serializers.CharField(read_only=True)
@@ -24,3 +26,14 @@ class UserObtainTokenSerializer(serializers.Serializer):
     @property
     def data(self):
         return self.validated_data
+
+
+class UserCartSerializer(serializers.ModelSerializer):
+    cart = serializers.SerializerMethodField()
+
+    class Meta:
+        model = get_user_model()
+        fields = ['cart',]
+
+    def get_cart(self, user):
+        return GoodSerializer(user.cart, many=True).data

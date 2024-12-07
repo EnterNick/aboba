@@ -1,14 +1,14 @@
+from django.shortcuts import redirect
 from django_filters import FilterSet, RangeFilter, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from rest_framework import filters
-from rest_framework.permissions import IsAuthenticated
 
 
-from apps.catalog.models import Good
+from apps.catalog.models import Good, Order
 
 from .serializers.modelSerializer import GoodSerializer
-from .serializers.requestSerializer import CreateUpdateGoodSerializer
+from .serializers.requestSerializer import CreateUpdateGoodSerializer, CreateUpdateOrderSerializer
 from .permissions import *
 
 class PriceFilter(FilterSet):
@@ -40,3 +40,13 @@ class SingleGoodView(RetrieveUpdateDestroyAPIView):
     queryset = Good.objects.all()
     serializer_class = GoodSerializer
     permission_classes = [IsOwner]
+
+
+class AddToCartView(CreateAPIView):
+    queryset = Order.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = CreateUpdateOrderSerializer
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        return redirect('user_cart')
