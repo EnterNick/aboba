@@ -21,7 +21,7 @@ class PriceFilter(FilterSet):
 
 
 class GoodsView(ListAPIView):
-    queryset = Good.objects.all()
+    queryset = Good.objects.order_by('-orders')
     serializer_class = GoodSerializer
     filterset_class = PriceFilter
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
@@ -36,10 +36,16 @@ class CreateGoodView(CreateAPIView):
     permission_classes = [IsStaff]
 
 
-class SingleGoodView(RetrieveUpdateDestroyAPIView):
+class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
     queryset = Good.objects.all()
     serializer_class = GoodSerializer
     permission_classes = [IsOwner]
+
+
+class SingleGoodView(RetrieveAPIView):
+    queryset = Good.objects.all()
+    serializer_class = GoodSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class AddToCartView(CreateAPIView):

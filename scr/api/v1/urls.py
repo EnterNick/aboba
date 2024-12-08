@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from .user_auth.views import UsersView, UserRegistrationView, LoginView
-from .catalog.views import GoodsView, SingleGoodView, CreateGoodView, AddToCartView
+from .catalog.views import GoodsView, SingleGoodView, CreateGoodView, AddToCartView, SingleGoodEditView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 
 user_urlpatterns = [
@@ -20,6 +20,7 @@ goods_urlpatterns = [
     path('', GoodsView.as_view(), name='all_goods'),
     path('add/', CreateGoodView.as_view(), name='add_good'),
     path('<int:pk>/', SingleGoodView.as_view(), name='good'),
+    path('<int:pk>/edit/', SingleGoodEditView.as_view(), name='edit_good'),
     path('<int:pk>/add-to-cart/', AddToCartView.as_view(), name='add_to_cart'),
 ]
 
