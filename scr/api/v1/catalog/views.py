@@ -4,13 +4,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from rest_framework import filters
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
 
 from apps.catalog.models import Good, Order
 
 from .serializers.modelSerializer import GoodSerializer
 from .serializers.requestSerializer import CreateUpdateGoodSerializer, CreateUpdateOrderSerializer
-from .permissions import *
+from ...auth.permissions import IsStaff, IsOwner
+
 
 class PriceFilter(FilterSet):
     category = CharFilter()

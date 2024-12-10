@@ -33,4 +33,8 @@ class LoginView(APIView):
 
         token_serializer.is_valid(raise_exception=True)
 
-        return Response(data=token_serializer.data, status=200)
+        response = Response(data=token_serializer.data, status=200)
+
+        response.set_cookie('accessToken', token_serializer.data['access_token'])
+
+        return response
