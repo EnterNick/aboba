@@ -33,6 +33,7 @@ class UserCartView(RetrieveAPIView):
                 good.income += order.value * good.price
                 good.orders += 1
                 good.have_bought += order.value
+                good.value -= order.value
                 good.save()
                 order.delete()
         return redirect('all_goods')

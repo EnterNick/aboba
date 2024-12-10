@@ -36,3 +36,10 @@ class CreateUpdateOrderSerializer(serializers.ModelSerializer):
         request = self.context['request']
         pk = request.parser_context['kwargs']['pk']
         return super().save(**kwargs, user=self.context['request'].user, good_id=pk)
+
+    def get_fields(self):
+        fields = super().get_fields()
+        request = self.context['request']
+        pk = request.parser_context['kwargs']['pk']
+        fields['value'] = serializers.IntegerField(max_value=Good.objects.get(pk=pk).value, initial=1)
+        return fields
