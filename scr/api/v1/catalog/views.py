@@ -3,6 +3,7 @@ from django_filters import FilterSet, RangeFilter, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from rest_framework import filters
+from rest_framework.response import Response
 
 
 from apps.catalog.models import Good, Order
@@ -62,8 +63,8 @@ class AddToCartView(CreateAPIView):
     serializer_class = CreateUpdateOrderSerializer
 
     def post(self, request, *args, **kwargs):
+        good = Good.objects.get(pk=request.parser_context['kwargs']['pk'])
+        if request.user == good.owner:
+            return Response(data={'message': 'Нельзя добавить свой товар в корзину'}, status=403)
         super().post(request, *args, **kwargs)
-        order = self.get_object()
-        order.good.orders += 1
-        order.good.save()
         return redirect('user_cart')

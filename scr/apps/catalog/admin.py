@@ -21,6 +21,7 @@ class GoodAdmin(admin.ModelAdmin):
         'conversion_level',
         'income',
         'has_seen',
+        'have_bought',
     ]
 
     def get_queryset(self, request):
@@ -28,6 +29,6 @@ class GoodAdmin(admin.ModelAdmin):
 
     def conversion_level(self, obj):
         try:
-            return round(obj.orders / obj.has_seen, 3) * 100
+            return str(round(obj.orders / obj.has_seen, 3) * 100) + '%'
         except ZeroDivisionError:
             return 0
