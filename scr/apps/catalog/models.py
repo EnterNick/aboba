@@ -23,6 +23,12 @@ class Good(models.Model):
 
     orders = models.IntegerField(default=0)
 
+    have_bought = models.IntegerField(default=0)
+
+    has_seen = models.IntegerField(default=0)
+
+    income = models.FloatField(default=0)
+
 
 class Order(models.Model):
     good = models.ForeignKey(Good, on_delete=models.CASCADE)
@@ -30,5 +36,3 @@ class Order(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     value = models.IntegerField(default=1)
-
-    destination = models.CharField(max_length=1000)

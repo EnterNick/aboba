@@ -9,9 +9,9 @@ class GoodSerializer(serializers.ModelSerializer):
         exclude = [
             'id',
             'cart',
+            'owner',
         ]
         read_only_fields = [
             'date_created',
             'orders',
-            'owner',
         ]
