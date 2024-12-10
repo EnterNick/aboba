@@ -47,6 +47,14 @@ class SingleGoodView(RetrieveAPIView):
     serializer_class = GoodSerializer
     permission_classes = [IsAuthenticated]
 
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        instance = self.get_object()
+        if instance.owner != request.user:
+            instance.has_seen += 1
+            instance.save()
+        return response
+
 
 class AddToCartView(CreateAPIView):
     queryset = Order.objects.all()

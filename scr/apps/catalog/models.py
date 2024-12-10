@@ -23,6 +23,10 @@ class Good(models.Model):
 
     orders = models.IntegerField(default=0)
 
+    has_seen = models.IntegerField(default=0)
+
+    income = models.FloatField(default=0)
+
 
 class Order(models.Model):
     good = models.ForeignKey(Good, on_delete=models.CASCADE)
