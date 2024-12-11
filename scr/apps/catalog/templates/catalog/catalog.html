@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+
+<div class="products">
+    <div class="container">
+        <h1 class="products__title">Товары</h1>
+        <div class="products__filters">
+            <form class="form">
+                {% csrf_token %}
+                {% render_form filter %}
+                <button type="submit">Применить</button>
+            </form>
+        </div>
+        <div class="products__wrapper">
+            {% if data.results %}
+                {% for product in data.results %}
+                    <a class="product" href="{% url 'good' product.id %}">
+                        <div class="product__header">
+                            <h2 class="product__title">{{ product.title }}</h2>
+                        </div>
+                        <div class="product__body">
+                            <p class="product__description">{{ product.description }}</p>
+                            <p class="product__price">Цена: <span class="product__price-value">{{ product.price }} руб.</span></p>
+                            <p class="product__quantity">Осталось: {{ product.value }}</p>
+                            <p class="product__category">Категория: {{ product.category }}</p>
+                            <p class="product__orders">Заказов: {{ product.orders }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>Товары не найдены.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if data.previous != null %}
+            <a href="?page=1">&laquo; Первая</a>
+            <a href="{{data.previous}}">Предыдущая</a>
+        {% endif %}
+
+        {% if data.next != null %}
+            <a href="{{data.next}}">Следующая</a>
+            <a href="{{data.next}}">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

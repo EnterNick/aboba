@@ -19,7 +19,10 @@ class UserProfileView(RetrieveAPIView):
     template_name = 'user_profile/profile.html'
 
     def get(self, request, *args, **kwargs):
-        return Response(data={'user': super().get(self, request, *args, **kwargs).data}, template_name=self.template_name)
+        return Response(
+            data={'user': super().get(self, request, *args, **kwargs).data},
+            template_name=self.template_name,
+        )
 
     def get_object(self):
         return self.request.user

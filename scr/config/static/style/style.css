@@ -8,6 +8,7 @@
 
 a {
   text-decoration: none;
+  color: #000;
 }
 
 body {
@@ -199,4 +200,129 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   margin-right: 0.5rem;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.products {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.products__title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.products__wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.product {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  min-width: 300px;
+}
+.product__header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.product__title {
+  margin-top: 0;
+  font-size: 24px;
+}
+.product__description {
+  margin-bottom: 10px;
+}
+.product__date, .product__price, .product__quantity, .product__category, .product__orders {
+  margin-bottom: 5px;
+}
+.product__price-value {
+  font-weight: bold;
+  font-size: 18px;
+}
+.product:hover {
+  transform: scale(1.1);
+  background-color: #e0e0e0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.pagination .step-links {
+  display: flex;
+  align-items: center;
+}
+.pagination .step-links a {
+  color: #333;
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+.pagination .step-links a:hover {
+  background-color: #f2f2f2;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  justify-content: center;
+}
+.form #id_price_0 {
+  margin-bottom: 5px;
+  font-weight: bold;
+  margin-left: 30px;
+}
+.form #id_price_1 {
+  margin-bottom: 5px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.form select,
+.form input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+.form select:focus,
+.form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.form button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.form button:hover {
+  background-color: #0153aa;
 }

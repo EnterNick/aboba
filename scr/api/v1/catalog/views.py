@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from django_filters import FilterSet, RangeFilter, CharFilter
+from django_filters import FilterSet, RangeFilter, ChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import (
     ListAPIView,
@@ -8,21 +8,26 @@ from rest_framework.generics import (
     RetrieveAPIView,
 )
 from rest_framework import filters
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from apps.catalog.models import Good, Order
+from apps.catalog.models import Good, Order, Category
 
 from .serializers.modelSerializer import GoodSerializer
 from .serializers.requestSerializer import (
     CreateUpdateGoodSerializer,
     CreateUpdateOrderSerializer,
+    FilterSerializer,
 )
 from ...auth.permissions import IsStaff, IsOwner
 
 
 class PriceFilter(FilterSet):
-    category = CharFilter()
+    category = ChoiceFilter(
+        initial='1',
+        choices=Category.objects.values_list('id', 'title'),
+    )
     price = RangeFilter()
 
     class Meta:
@@ -42,6 +47,27 @@ class GoodsView(ListAPIView):
     search_fields = ['title', 'description']
     ordering_fields = ['title', 'price', 'date_created']
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/catalog.html'
+    filter_serializer_class = FilterSerializer
+
+    def get(self, request, *args, **kwargs):
+        filter_serializer = self.filter_serializer_class(
+            data={
+                'price_min': request.GET.get('price_min'),
+                'price_max': request.GET.get('price_max'),
+                'category': request.GET.get('category', 1),
+            }
+        )
+        if not filter_serializer.is_valid():
+            filter_serializer = self.filter_serializer_class()
+        return Response(
+            data={
+                'data': super().get(self, request, *args, **kwargs).data,
+                'filter': filter_serializer,
+            },
+            template_name=self.template_name,
+        )
 
 
 class CreateGoodView(CreateAPIView):

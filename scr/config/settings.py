@@ -140,7 +140,7 @@ REST_FRAMEWORK = {
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 3,
+    'PAGE_SIZE': 9,
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -153,6 +153,4 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'config/static/'
-]
+STATICFILES_DIRS = [BASE_DIR / 'config/static/']

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from scr.api.v1.catalog.serializers.modelSerializer import GoodSerializer
+from ...catalog.serializers.modelSerializer import GoodSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):

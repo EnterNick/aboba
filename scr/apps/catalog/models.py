@@ -4,6 +4,13 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+
 class Good(models.Model):
     title = models.CharField(max_length=100)
 
@@ -23,7 +30,7 @@ class Good(models.Model):
         get_user_model(), on_delete=models.CASCADE, null=True, blank=True
     )
 
-    category = models.CharField(max_length=100, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
 
     orders = models.IntegerField(default=0)
 
