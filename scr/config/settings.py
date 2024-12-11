@@ -48,7 +48,13 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'api/v1/user_auth/templates/'],
+        'DIRS': [
+            BASE_DIR / 'api/v1/user_auth/templates/',
+            BASE_DIR / 'config/templates/',
+            BASE_DIR / 'apps/user_profile/templates/',
+            BASE_DIR / 'apps/user_auth/templates/',
+            BASE_DIR / 'apps/catalog/templates/',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
