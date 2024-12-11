@@ -10,6 +10,9 @@ class GoodSerializer(serializers.ModelSerializer):
             'id',
             'cart',
             'owner',
+            'have_bought',
+            'has_seen',
+            'income'
         ]
         read_only_fields = [
             'date_created',

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 def path_to_img(user, filename):
     return f'user_{user.id}/{filename}'
 

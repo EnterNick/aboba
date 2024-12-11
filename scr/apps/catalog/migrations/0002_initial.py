@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -18,21 +17,35 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='good',
             name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
             model_name='order',
             name='good',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='catalog.good'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='catalog.good'
+            ),
         ),
         migrations.AddField(
             model_name='order',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
             model_name='good',
             name='cart',
-            field=models.ManyToManyField(blank=True, related_name='cart', through='catalog.Order', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                blank=True,
+                related_name='cart',
+                through='catalog.Order',
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

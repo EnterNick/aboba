@@ -125,14 +125,13 @@ MEDIA_ROOT = BASE_DIR / 'apps/user_auth/media/'
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-
-    "TOKEN_OBTAIN_SERIALIZER": "api.auth.auth.CustomTokenObtainPairSerializer",
+    'TOKEN_OBTAIN_SERIALIZER': 'api.auth.auth.CustomTokenObtainPairSerializer',
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 3,
 }

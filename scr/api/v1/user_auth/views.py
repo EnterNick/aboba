@@ -4,7 +4,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers.modelSerializers import UserSerializer
-from .serializers.requestSerializers import LoginRequestSerializer, RegistrationRequestSerializer
+from .serializers.requestSerializers import (
+    LoginRequestSerializer,
+    RegistrationRequestSerializer,
+)
 from .serializers.responseSerializers import UserObtainTokenSerializer
 
 

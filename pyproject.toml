@@ -17,3 +17,21 @@ django-filter = "^24.3"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "W", "C901", "B"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "single"
+
+indent-style = "space"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["E402"]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
