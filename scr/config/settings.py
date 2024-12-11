@@ -1,6 +1,7 @@
 from datetime import timedelta
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -150,3 +151,8 @@ EMAIL_HOST_PASSWORD = 'tyjshewgrquvmspu'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
+
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'config/static/'
+]

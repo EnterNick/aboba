@@ -1,0 +1,33 @@
+{% load static %}
+
+<header class="header">
+    <div class="container">
+        <div class="header__wrapper">
+            <div class="header__logo">
+                <a href="{% url 'all_goods' %}" class="header__logo-link">
+                    <img src="{% static 'img/logo.svg' %}" alt="Лого" class="header__logo-image">
+                </a>
+            </div>
+            <nav class="header__nav">
+                <ul class="header__nav-list">
+                    <li class="header__nav-item">
+                        <a href="{% url 'all_goods' %}" class="header__nav-link">Домашняя</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a href="#" class="header__nav-link">Обратная связь</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <a href="{% url 'user_cart' %}" class="header__actions-link header__actions-link--cart">
+                    <img src="{% static 'img/cart.svg' %}" alt="cart" class="header__cart-icon">
+                </a>
+                <a href="{% url 'login' %}" class="header__actions-link">Войти</a>
+                <a href="{% url 'registration' %}" class="header__actions-link header__actions-link--primary">Зарегистрироваться</a>
+            </div>
+            <button class="header__burger-btn">
+                <span class="header__burger-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>

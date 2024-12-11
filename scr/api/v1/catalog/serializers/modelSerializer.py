@@ -7,7 +7,6 @@ class GoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Good
         exclude = [
-            'id',
             'cart',
             'owner',
             'have_bought',

@@ -1,0 +1,242 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.profile {
+    &__header {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        padding: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+
+        &-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 1.5rem;
+            overflow: hidden;
+
+            &-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &-info {
+            flex-grow: 1;
+        }
+
+        &-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        &-email,
+        &-joined {
+            font-size: 1.4rem;
+            color: #666;
+        }
+    }
+
+    &__cart {
+        &-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        &-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        &-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        &-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        &-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        &-price {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        &-btn {
+            background-color: #3649f4;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        &-empty {
+            font-size: 1.4rem;
+            color: #666;
+        }
+    }
+}
+
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo {
+        &-link {
+            display: block;
+        }
+
+        &-image {
+            max-width: 150px;
+        }
+    }
+
+    &__nav {
+        &-list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        &-item {
+            margin-right: 2rem;
+        }
+
+        &-link {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: color 0.3s;
+
+            &:hover {
+                color: #6ca735;
+            }
+        }
+    }
+
+    &__burger-btn {
+        display: none;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+
+        &-icon {
+            display: block;
+            width: 24px;
+            height: 24px;
+            background-image: url('burger-icon.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        &__nav,
+        &__actions {
+            display: none;
+        }
+
+        &__burger-btn {
+            display: block;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+
+        &-link {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.4rem;
+            margin-left: 2rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                color: #6ca735;
+            }
+
+            &--primary {
+                background-color: #007bff;
+                color: #fff;
+                padding: 0.8rem 1.6rem;
+                border-radius: 5px;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+
+            &--cart {
+                position: relative;
+
+                .header__cart-icon {
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
+                    background-image: url('cart-icon.svg');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+}
