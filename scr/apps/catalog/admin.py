@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Good
 
+
 @admin.register(Good)
 class GoodAdmin(admin.ModelAdmin):
     exclude = [
@@ -9,14 +10,7 @@ class GoodAdmin(admin.ModelAdmin):
         'orders',
         'date_created',
     ]
-    list_display = [
-        'title',
-        'description',
-        'price',
-        'value',
-        'category',
-        'orders'
-    ]
+    list_display = ['title', 'description', 'price', 'value', 'category', 'orders']
     readonly_fields = [
         'conversion_level',
         'income',

@@ -18,8 +18,10 @@ class UserObtainTokenSerializer(serializers.Serializer):
                 'refresh_token': str(RefreshToken.for_user(user)),
             }
             return validated_data
-        except KeyError:
-            raise KeyError('data argument must provide user instance with key "user"')
+        except KeyError as exc:
+            raise KeyError(
+                'data argument must provide user instance with key "user"'
+            ) from exc
 
     @property
     def data(self):

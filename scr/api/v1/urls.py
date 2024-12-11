@@ -1,22 +1,41 @@
 from django.urls import path, include
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.views import (
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+)
 
 from .user_auth.views import UsersView, UserRegistrationView, LoginView
-from .catalog.views import GoodsView, SingleGoodView, CreateGoodView, AddToCartView, SingleGoodEditView
+from .catalog.views import (
+    GoodsView,
+    SingleGoodView,
+    CreateGoodView,
+    AddToCartView,
+    SingleGoodEditView,
+)
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 
 user_urlpatterns = [
     path('', UsersView.as_view(), name='all_users'),
     path('registration/', UserRegistrationView.as_view(), name='registration'),
     path('login/', LoginView.as_view(), name='login'),
-    path('reset_password/', PasswordResetView.as_view(),
-         name='reset_password'),
-    path('reset_password_sent/', PasswordResetDoneView.as_view(),
-         name='password_reset_done'),
-    path('reset/<int:pk>/<token>', PasswordResetConfirmView.as_view(),
-         name='password_reset_confirm'),
-    path('reset_password_complete/', PasswordResetCompleteView.as_view(),
-         name='password_reset_complete'),
+    path('reset_password/', PasswordResetView.as_view(), name='reset_password'),
+    path(
+        'reset_password_sent/',
+        PasswordResetDoneView.as_view(),
+        name='password_reset_done',
+    ),
+    path(
+        'reset/<int:pk>/<token>',
+        PasswordResetConfirmView.as_view(),
+        name='password_reset_confirm',
+    ),
+    path(
+        'reset_password_complete/',
+        PasswordResetCompleteView.as_view(),
+        name='password_reset_complete',
+    ),
 ]
 
 profile_urlpatterns = [

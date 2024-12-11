@@ -9,7 +9,9 @@ class UserCartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['cart',]
+        fields = [
+            'cart',
+        ]
 
     def get_cart(self, user):
         return GoodSerializer(user.cart, many=True).data

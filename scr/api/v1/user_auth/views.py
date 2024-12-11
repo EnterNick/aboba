@@ -4,7 +4,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers.modelSerializers import UserSerializer
-from .serializers.requestSerializers import LoginRequestSerializer, RegistrationRequestSerializer
+from .serializers.requestSerializers import (
+    LoginRequestSerializer,
+    RegistrationRequestSerializer,
+)
 from .serializers.responseSerializers import UserObtainTokenSerializer
 
 
@@ -33,4 +36,8 @@ class LoginView(APIView):
 
         token_serializer.is_valid(raise_exception=True)
 
-        return Response(data=token_serializer.data, status=200)
+        response = Response(data=token_serializer.data, status=200)
+
+        response.set_cookie('accessToken', token_serializer.data['access_token'])
+
+        return response

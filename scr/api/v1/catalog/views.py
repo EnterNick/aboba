@@ -1,16 +1,25 @@
 from django.shortcuts import redirect
 from django_filters import FilterSet, RangeFilter, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    CreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    RetrieveAPIView,
+)
 from rest_framework import filters
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
 
 from apps.catalog.models import Good, Order
 
 from .serializers.modelSerializer import GoodSerializer
-from .serializers.requestSerializer import CreateUpdateGoodSerializer, CreateUpdateOrderSerializer
-from .permissions import *
+from .serializers.requestSerializer import (
+    CreateUpdateGoodSerializer,
+    CreateUpdateOrderSerializer,
+)
+from ...auth.permissions import IsStaff, IsOwner
+
 
 class PriceFilter(FilterSet):
     category = CharFilter()
@@ -25,7 +34,11 @@ class GoodsView(ListAPIView):
     queryset = Good.objects.order_by('-orders')
     serializer_class = GoodSerializer
     filterset_class = PriceFilter
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
+    filter_backends = [
+        filters.SearchFilter,
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
     search_fields = ['title', 'description']
     ordering_fields = ['title', 'price', 'date_created']
     permission_classes = [IsAuthenticated]
@@ -65,6 +78,8 @@ class AddToCartView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         good = Good.objects.get(pk=request.parser_context['kwargs']['pk'])
         if request.user == good.owner:
-            return Response(data={'message': 'Нельзя добавить свой товар в корзину'}, status=403)
+            return Response(
+                data={'message': 'Нельзя добавить свой товар в корзину'}, status=403
+            )
         super().post(request, *args, **kwargs)
         return redirect('user_cart')

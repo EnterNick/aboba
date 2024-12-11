@@ -15,9 +15,13 @@ class Good(models.Model):
 
     value = models.IntegerField()
 
-    cart = models.ManyToManyField(get_user_model(), through='Order', related_name='cart', blank=True)
+    cart = models.ManyToManyField(
+        get_user_model(), through='Order', related_name='cart', blank=True
+    )
 
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
+    owner = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, null=True, blank=True
+    )
 
     category = models.CharField(max_length=100, null=True, blank=True)
 

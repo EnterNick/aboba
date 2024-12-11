@@ -10,10 +10,14 @@ class CreateUpdateGoodSerializer(serializers.ModelSerializer):
             'id',
             'date_created',
             'cart',
-            'orders'
+            'orders',
+            'have_bought',
+            'has_seen',
+            'income'
         ]
-        read_only_fields = ['owner',]
-
+        read_only_fields = [
+            'owner',
+        ]
 
     def save(self, **kwargs):
         return super().save(**kwargs, owner=self.context['request'].user)
@@ -41,5 +45,9 @@ class CreateUpdateOrderSerializer(serializers.ModelSerializer):
         fields = super().get_fields()
         request = self.context['request']
         pk = request.parser_context['kwargs']['pk']
-        fields['value'] = serializers.IntegerField(max_value=Good.objects.get(pk=pk).value, initial=1)
+        fields['value'] = serializers.IntegerField(
+            max_value=Good.objects.get(pk=pk).value,
+            initial=1,
+            min_value=1,
+        )
         return fields

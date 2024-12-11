@@ -6,7 +6,6 @@ from rest_framework.serializers import ValidationError
 
 
 class LoginRequestSerializer(serializers.Serializer):
-
     email = serializers.CharField(max_length=100, required=True)
 
     password = serializers.CharField(max_length=120, write_only=True, required=True)
@@ -27,7 +26,6 @@ class LoginRequestSerializer(serializers.Serializer):
 
 
 class RegistrationRequestSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = get_user_model()
         fields = [
