@@ -11,6 +11,10 @@ class Category(models.Model):
         return self.title
 
 
+def path_to_img(user, filename):
+    return f'user_{user.id}/{filename}'
+
+
 class Good(models.Model):
     title = models.CharField(max_length=100)
 
@@ -39,6 +43,11 @@ class Good(models.Model):
     has_seen = models.IntegerField(default=0)
 
     income = models.FloatField(default=0)
+
+    image = models.ImageField(
+        default='default-good.jpg',
+        upload_to=path_to_img,
+    )
 
 
 class Order(models.Model):

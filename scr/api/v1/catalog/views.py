@@ -86,13 +86,18 @@ class SingleGoodView(RetrieveAPIView):
     queryset = Good.objects.all()
     serializer_class = GoodSerializer
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/good-detail.html'
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
+        if response.status_code != 200:
+            return response
         instance = self.get_object()
         if instance.owner != request.user:
             instance.has_seen += 1
             instance.save()
+        response.data = {'product': response.data}
         return response
 
 

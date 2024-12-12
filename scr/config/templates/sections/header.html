@@ -18,16 +18,13 @@
                     </li>
                 </ul>
             </nav>
-            <div class="header__actions">
-                <a href="{% url 'user_cart' %}" class="header__actions-link header__actions-link--cart">
-                    <img src="{% static 'img/cart.svg' %}" alt="cart" class="header__cart-icon">
+            <div class="header__nav__actions">
+                <a href="{% url 'user_cart' %}" class="header__nav__actions-link header__nav__actions-link--cart">
+                    <img src="{% static 'img/cart.svg' %}" alt="Корзина" class="header__cart-icon">
                 </a>
-                <a href="{% url 'login' %}" class="header__actions-link">Войти</a>
-                <a href="{% url 'registration' %}" class="header__actions-link header__actions-link--primary">Зарегистрироваться</a>
+                <a href="{% url 'login' %}" class="header__nav__actions-link">Войти</a>
+                <a href="{% url 'registration' %}" class="header__nav__actions-link header__nav__actions-link--primary">Зарегистрироваться</a>
             </div>
-            <button class="header__burger-btn">
-                <span class="header__burger-icon"></span>
-            </button>
         </div>
     </div>
 </header>
