@@ -21,6 +21,7 @@
 
                 <form class="product-page__details_form" method="post" action="{% url 'add_to_cart' product.id %}">
                     {% csrf_token %}
+                    <input type="number" required value=1 name="value" min=1 class="product-page__details_form-input">
                     <button type="submit" class="product-page__details_form_submit-btn">Добавить в корзину</button>
                 </form>
             </div>

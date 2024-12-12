@@ -48,7 +48,6 @@ class CreateUpdateOrderSerializer(serializers.ModelSerializer):
         fields['value'] = serializers.IntegerField(
             max_value=Good.objects.get(pk=pk).value,
             initial=1,
-            min_value=1,
         )
         return fields
 

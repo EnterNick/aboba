@@ -112,5 +112,15 @@ class AddToCartView(CreateAPIView):
             return Response(
                 data={'message': 'Нельзя добавить свой товар в корзину'}, status=403
             )
-        super().post(request, *args, **kwargs)
-        return redirect('user_cart')
+        try:
+            order = Order.objects.get(good=good, user=request.user)
+            order.value += int(request.POST['value'])
+            order.save()
+            if not order.value:
+                order.delete()
+            elif order.value > good.value:
+                order.value = good.value
+                order.save()
+        except Exception:
+            super().post(request, *args, **kwargs)
+        return redirect('user_cart', permanent=True)

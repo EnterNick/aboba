@@ -32,6 +32,8 @@ class UserCartView(RetrieveAPIView):
     serializer_class = UserCartSerializer
     queryset = get_user_model().objects.all()
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'user_profile/cart.html'
 
     def get_object(self):
         return self.request.user

@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('catalog', '0001_initial'),
     ]
@@ -14,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='good',
             name='image',
-            field=models.ImageField(default='profile.png', upload_to=apps.catalog.models.path_to_img),
+            field=models.ImageField(
+                default='profile.png', upload_to=apps.catalog.models.path_to_img
+            ),
         ),
     ]
