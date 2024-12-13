@@ -1,8 +1,5 @@
+from apps.catalog.models import Good, Order
 from rest_framework import serializers
-
-from apps.catalog.models import Good
-
-from apps.catalog.models import Order
 
 
 class GoodSerializer(serializers.ModelSerializer):
@@ -39,4 +36,8 @@ class GoodValueInCartSerializer(serializers.ModelSerializer):
         ]
 
     def get_val(self, good):
-        return sum(Order.objects.filter(good=good, user=self.context['request'].user).values_list('value', flat=True))
+        return sum(
+            Order.objects.filter(
+                good=good, user=self.context['request'].user
+            ).values_list('value', flat=True)
+        )

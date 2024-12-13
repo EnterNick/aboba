@@ -1,9 +1,8 @@
+from apps.catalog.models import Order
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
-
-from apps.catalog.models import Order
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 

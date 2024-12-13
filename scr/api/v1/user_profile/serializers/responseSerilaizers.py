@@ -14,4 +14,6 @@ class UserCartSerializer(serializers.ModelSerializer):
         ]
 
     def get_cart(self, user):
-        return GoodValueInCartSerializer(user.cart, many=True, context=self.context).data
+        return GoodValueInCartSerializer(
+            user.cart, many=True, context=self.context
+        ).data

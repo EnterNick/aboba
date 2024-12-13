@@ -1,18 +1,17 @@
+from apps.catalog.models import Good, Order, Category
 from django.shortcuts import redirect
 from django_filters import FilterSet, RangeFilter, ChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from rest_framework.generics import (
     ListAPIView,
     CreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveAPIView,
 )
-from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-
-from apps.catalog.models import Good, Order, Category
 
 from .serializers.modelSerializer import GoodSerializer
 from .serializers.requestSerializer import (
@@ -52,13 +51,7 @@ class GoodsView(ListAPIView):
     filter_serializer_class = FilterSerializer
 
     def get(self, request, *args, **kwargs):
-        filter_serializer = self.filter_serializer_class(
-            data={
-                'price_min': request.GET.get('price_min'),
-                'price_max': request.GET.get('price_max'),
-                'category': request.GET.get('category', 1),
-            }
-        )
+        filter_serializer = self.filter_serializer_class(data=request.GET)
         if not filter_serializer.is_valid():
             filter_serializer = self.filter_serializer_class()
         return Response(

@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from apps.catalog.models import Good, Order, Category
+from rest_framework import serializers
 
 
 class CreateUpdateGoodSerializer(serializers.ModelSerializer):
