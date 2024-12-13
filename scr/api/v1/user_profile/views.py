@@ -1,9 +1,11 @@
+from apps.catalog.models import Order
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
 
-from apps.catalog.models import Order
 from .serializers.modelSerializer import UserSerializer
 from .serializers.responseSerilaizers import UserCartSerializer
 
@@ -12,6 +14,14 @@ class UserProfileView(RetrieveAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'user_profile/profile.html'
+
+    def get(self, request, *args, **kwargs):
+        return Response(
+            data={'user': super().get(self, request, *args, **kwargs).data},
+            template_name=self.template_name,
+        )
 
     def get_object(self):
         return self.request.user
@@ -21,6 +31,8 @@ class UserCartView(RetrieveAPIView):
     serializer_class = UserCartSerializer
     queryset = get_user_model().objects.all()
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'user_profile/cart.html'
 
     def get_object(self):
         return self.request.user

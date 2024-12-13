@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile">
+    <div class="profile__header">
+        <div class="profile__header-avatar">
+            <img src="{{ user.avatar }}" alt="Avatar" class="profile__header-avatar-image">
+        </div>
+        <div class="profile__header-info">
+            <h2 class="profile__header-name">{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="profile__header-email">{{ user.email }}</p>
+            </div>
+    </div>
+    <div class="profile__cart">
+        <h3 class="profile__cart-title">Cart</h3>
+        {% if user.cart %}
+        <ul class="profile__cart-items">
+            {% for product in user.cart %}
+            <li class="profile__cart-item">
+                <a href="{% url 'good' product.id %}" class="profile__cart-link">
+                    <div class="profile__cart-info">
+                        <h4 class="profile__cart-title">{{ product.title }}</h4>
+                        <p class="profile__cart-price">{{ product.price }} RUB</p>
+                    </div>
+                    <div class="profile__cart-action">
+                        <button class="profile__cart-btn">Перейти на страницу</button>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="profile__cart-empty">Корзина пуста.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

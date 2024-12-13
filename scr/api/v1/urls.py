@@ -1,12 +1,11 @@
-from django.urls import path, include
 from django.contrib.auth.views import (
     PasswordResetView,
     PasswordResetDoneView,
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
+from django.urls import path, include
 
-from .user_auth.views import UsersView, UserRegistrationView, LoginView
 from .catalog.views import (
     GoodsView,
     SingleGoodView,
@@ -14,6 +13,7 @@ from .catalog.views import (
     AddToCartView,
     SingleGoodEditView,
 )
+from .user_auth.views import UsersView, UserRegistrationView, LoginView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 
 user_urlpatterns = [

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+
+<div class="products">
+    <div class="container">
+        <h1 class="products__title">Товары</h1>
+        
+        <div class="products__filters">
+            <form class="form">
+                {% csrf_token %}
+                {% render_form filter %}
+                <button type="submit" class="form__submit-btn">Применить</button>
+            </form>
+        </div>
+        
+        <div class="products__wrapper">
+            {% if data.results %}
+                {% for product in data.results %}
+                    <a class="products__product" href="{% url 'good' product.id %}">
+                        <div class="products__product__header">
+                            <img class="products__product__image" src="{{ product.image }}" alt="{{ product.title }}">
+                            <h2 class="products__product__title">{{ product.title }}</h2>
+                        </div>
+                        <div class="products__product__body">
+                            <p class="products__product__description">{{ product.description }}</p>
+                            <p class="products__product__price">
+                                Цена: <span class="products__product__price-value">{{ product.price }} руб.</span>
+                            </p>
+                            <p class="products__product__quantity">Осталось: {{ product.value }}</p>
+                            <p class="products__product__category">Категория: {{ product.category }}</p>
+                            <p class="products__product__orders">Заказов: {{ product.orders }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="products__no-results">Товары не найдены.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if data.previous != null %}
+            <a class="pagination__link" href="?page=1">&laquo; Первая</a>
+            <a class="pagination__link" href="{{ data.previous }}">Предыдущая</a>
+        {% endif %}
+
+        {% if data.next != null %}
+            <a class="pagination__link" href="{{ data.next }}">Следующая</a>
+            <a class="pagination__link" href="{{ data.next }}">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

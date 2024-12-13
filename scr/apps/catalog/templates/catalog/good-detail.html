@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="product-page">
+    <div class="container">
+        <div class="product-page__header">
+            <h1 class="product-page__title">{{ product.title }}</h1>
+        </div>
+
+        <div class="product-page__content">
+            <div class="product-page__image">
+                <img src="{{ product.image }}" alt="{{ product.title }}" class="product-page__image-img">
+            </div>
+            <div class="product-page__details">
+                <p class="product-page__details_description">{{ product.description }}</p>
+                <p class="product-page__details_price">Цена: <span class="product-page__price-value">{{ product.price }} руб.</span></p>
+                <p class="product-page__quantity">Осталось: <span class="product-page__quantity-value">{{ product.value }}</span></p>
+                <p class="product-page__category">Категория: <span class="product-page__category-value">{{ product.category }}</span></p>
+                <p class="product-page__orders">Заказов: <span class="product-page__orders-value">{{ product.orders }}</span></p>
+
+                <form class="product-page__details_form" method="post" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <input type="number" required value=1 name="value" min=1 class="product-page__details_form-input">
+                    <button type="submit" class="product-page__details_form_submit-btn">Добавить в корзину</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

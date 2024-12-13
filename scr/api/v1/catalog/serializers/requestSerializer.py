@@ -1,6 +1,5 @@
+from apps.catalog.models import Good, Order, Category
 from rest_framework import serializers
-
-from apps.catalog.models import Good, Order
 
 
 class CreateUpdateGoodSerializer(serializers.ModelSerializer):
@@ -13,7 +12,7 @@ class CreateUpdateGoodSerializer(serializers.ModelSerializer):
             'orders',
             'have_bought',
             'has_seen',
-            'income'
+            'income',
         ]
         read_only_fields = [
             'owner',
@@ -48,6 +47,14 @@ class CreateUpdateOrderSerializer(serializers.ModelSerializer):
         fields['value'] = serializers.IntegerField(
             max_value=Good.objects.get(pk=pk).value,
             initial=1,
-            min_value=1,
         )
         return fields
+
+
+class FilterSerializer(serializers.Serializer):
+    price_min = serializers.FloatField(min_value=1, label='Минимальная цена: ')
+    price_max = serializers.FloatField(label='Максимальная цена: ')
+    category = serializers.ChoiceField(
+        choices=Category.objects.values_list('id', 'title'),
+        label='Категория: ',
+    )

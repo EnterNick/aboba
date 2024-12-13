@@ -1,28 +1,32 @@
+from apps.catalog.models import Good, Order, Category
 from django.shortcuts import redirect
-from django_filters import FilterSet, RangeFilter, CharFilter
+from django_filters import FilterSet, RangeFilter, ChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from rest_framework.generics import (
     ListAPIView,
     CreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveAPIView,
 )
-from rest_framework import filters
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-
-from apps.catalog.models import Good, Order
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
 
 from .serializers.modelSerializer import GoodSerializer
 from .serializers.requestSerializer import (
     CreateUpdateGoodSerializer,
     CreateUpdateOrderSerializer,
+    FilterSerializer,
 )
 from ...auth.permissions import IsStaff, IsOwner
 
 
 class PriceFilter(FilterSet):
-    category = CharFilter()
+    category = ChoiceFilter(
+        initial='1',
+        choices=Category.objects.values_list('id', 'title'),
+    )
     price = RangeFilter()
 
     class Meta:
@@ -42,6 +46,21 @@ class GoodsView(ListAPIView):
     search_fields = ['title', 'description']
     ordering_fields = ['title', 'price', 'date_created']
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/catalog.html'
+    filter_serializer_class = FilterSerializer
+
+    def get(self, request, *args, **kwargs):
+        filter_serializer = self.filter_serializer_class(data=request.GET)
+        if not filter_serializer.is_valid():
+            filter_serializer = self.filter_serializer_class()
+        return Response(
+            data={
+                'data': super().get(self, request, *args, **kwargs).data,
+                'filter': filter_serializer,
+            },
+            template_name=self.template_name,
+        )
 
 
 class CreateGoodView(CreateAPIView):
@@ -60,13 +79,18 @@ class SingleGoodView(RetrieveAPIView):
     queryset = Good.objects.all()
     serializer_class = GoodSerializer
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/good-detail.html'
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
+        if response.status_code != 200:
+            return response
         instance = self.get_object()
         if instance.owner != request.user:
             instance.has_seen += 1
             instance.save()
+        response.data = {'product': response.data}
         return response
 
 
@@ -81,5 +105,15 @@ class AddToCartView(CreateAPIView):
             return Response(
                 data={'message': 'Нельзя добавить свой товар в корзину'}, status=403
             )
-        super().post(request, *args, **kwargs)
-        return redirect('user_cart')
+        try:
+            order = Order.objects.get(good=good, user=request.user)
+            order.value += int(request.POST['value'])
+            order.save()
+            if not order.value:
+                order.delete()
+            elif order.value > good.value:
+                order.value = good.value
+                order.save()
+        except Exception:
+            super().post(request, *args, **kwargs)
+        return redirect('user_cart', permanent=True)

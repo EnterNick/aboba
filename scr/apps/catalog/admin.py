@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Good
+from .models import Good, Category
+
+admin.site.register(Category)
 
 
 @admin.register(Good)
