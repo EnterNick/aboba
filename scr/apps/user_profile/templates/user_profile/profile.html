@@ -7,12 +7,13 @@
             <img src="{{ user.avatar }}" alt="Avatar" class="profile__header-avatar-image">
         </div>
         <div class="profile__header-info">
-            <h2 class="profile__header-name">{{ user.first_name }} {{ user.last_name }}</h2>
+            <h2 class="profile__header-name">{{ user.username }}</h2>
+            <p class="profile__header-name">{{ user.first_name }} {{ user.last_name }}</p>
             <p class="profile__header-email">{{ user.email }}</p>
             </div>
     </div>
     <div class="profile__cart">
-        <h3 class="profile__cart-title">Cart</h3>
+        <h3 class="profile__cart-title">Корзина</h3>
         {% if user.cart %}
         <ul class="profile__cart-items">
             {% for product in user.cart %}

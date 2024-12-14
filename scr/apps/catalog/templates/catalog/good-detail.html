@@ -5,24 +5,31 @@
 <div class="product-page">
     <div class="container">
         <div class="product-page__header">
-            <h1 class="product-page__title">{{ product.title }}</h1>
+            <h1 class="product-page__title">{{ title }}</h1>
         </div>
 
         <div class="product-page__content">
             <div class="product-page__image">
-                <img src="{{ product.image }}" alt="{{ product.title }}" class="product-page__image-img">
+                <img src="{{ image }}" alt="{{ title }}" class="product-page__image-img">
             </div>
             <div class="product-page__details">
-                <p class="product-page__details_description">{{ product.description }}</p>
-                <p class="product-page__details_price">Цена: <span class="product-page__price-value">{{ product.price }} руб.</span></p>
-                <p class="product-page__quantity">Осталось: <span class="product-page__quantity-value">{{ product.value }}</span></p>
-                <p class="product-page__category">Категория: <span class="product-page__category-value">{{ product.category }}</span></p>
-                <p class="product-page__orders">Заказов: <span class="product-page__orders-value">{{ product.orders }}</span></p>
+                <p class="product-page__details_description">{{ description }}</p>
+                <p class="product-page__details_price">Цена: <span class="product-page__price-value">{{ price }} руб.</span></p>
+                <p class="product-page__quantity">Осталось: <span class="product-page__quantity-value">{{ value }}</span></p>
+                <p class="product-page__category">Категория: <span class="product-page__category-value">{{ category }}</span></p>
+                <p class="product-page__orders">Заказов: <span class="product-page__orders-value">{{ orders }}</span></p>
 
-                <form class="product-page__details_form" method="post" action="{% url 'add_to_cart' product.id %}">
+                <form class="form" method="post" action="{% url 'add_to_cart' id %}">
                     {% csrf_token %}
-                    <input type="number" required value=1 name="value" min=1 class="product-page__details_form-input">
-                    <button type="submit" class="product-page__details_form_submit-btn">Добавить в корзину</button>
+                    <input type="number" required value=1 name="value" min=1>
+                    <button type="submit" class="form__btn" {% if value <= 0 %} disabled {% endif %}>Добавить в корзину</button>
+                    <script>
+                        const btn = document.querySelector('.form__btn')
+                        if (btn.disabled) {
+                            btn.style.backgroundColor = '#0056b3'
+                            btn.style.cursor = 'default'
+                        }
+                    </script>
                 </form>
             </div>
         </div>

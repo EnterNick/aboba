@@ -357,6 +357,15 @@ a {
     border-radius: 5px; 
     background-color: $color-background;
     justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+
+    &-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 3rem;
+    }
 
     #id_price_0,
     #id_price_1 {
@@ -450,37 +459,6 @@ a {
             margin-bottom: 10px;
             color: $color-blue; 
         }
-
-        &_form {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            gap: 10px;
-
-            &-input {
-                padding: 10px; 
-                margin-bottom: 10px; 
-                border: 1px solid $color-gray-dark; 
-                border-radius: 4px; 
-                font-size: 16px; 
-                transition: border-color 0.3s; 
-            }
-
-            &_submit-btn {
-                padding: 10px 15px;
-                background-color: $color-blue; 
-                color: #fff; 
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-
-                &:hover {
-                    background-color: $color-blue-dark; 
-                }
-            }
-        }
     }
 }
 
@@ -516,10 +494,11 @@ a {
         &_actions {
             display: flex;
             gap: 15px;
+            margin-left: 30px;
         }
 
         &-image {
-            flex: 0 0 100px; // Фиксированная ширина для изображения
+            flex: 0 0 100px;
             margin-right: 15px;
 
             img {
@@ -531,6 +510,7 @@ a {
 
         &-info {
             flex-grow: 1;
+            width: 14rem;
 
             &-title {
                 font-size: 1.5rem;
@@ -566,7 +546,7 @@ a {
 
             &-val {
                 font-size: 1rem;
-                color: $color-gray;
+                color: $color-gray;         
 
                 &-value {
                     font-weight: bold;
@@ -574,7 +554,8 @@ a {
             }
         }
 
-        &-remove-btn {
+        &-btn {
+            text-wrap: nowrap;
             background-color: $color-blue;
             color: #fff;
             border: none;

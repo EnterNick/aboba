@@ -53,7 +53,7 @@ class GoodsView(ListAPIView):
     def get(self, request, *args, **kwargs):
         filter_serializer = self.filter_serializer_class(data=request.GET)
         if not filter_serializer.is_valid():
-            filter_serializer = self.filter_serializer_class()
+            pass
         return Response(
             data={
                 'data': super().get(self, request, *args, **kwargs).data,
@@ -67,7 +67,20 @@ class CreateGoodView(CreateAPIView):
     queryset = Good.objects.all()
     serializer_class = CreateUpdateGoodSerializer
     permission_classes = [IsStaff]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/create-good.html'
 
+    def get(self, request, *args, **kwargs):
+        return Response(
+            data={'categories': Category.objects.values_list('title', flat=True)},
+            template_name=self.template_name,
+        )
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 200:
+            return redirect('all_goods')
+        return response
 
 class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
     queryset = Good.objects.all()
@@ -90,7 +103,6 @@ class SingleGoodView(RetrieveAPIView):
         if instance.owner != request.user:
             instance.has_seen += 1
             instance.save()
-        response.data = {'product': response.data}
         return response
 
 

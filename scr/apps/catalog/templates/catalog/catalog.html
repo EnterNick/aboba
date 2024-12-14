@@ -10,7 +10,23 @@
         <div class="products__filters">
             <form class="form">
                 {% csrf_token %}
-                {% render_form filter %}
+                <div class="form-group">
+                    <label for="price_min">Минимальная цена:</label>
+                    <input type="number" id="price_min" name="price_min" value="{{ filter.price_min.value }}">
+                </div>
+                <div class="form-group">
+                    <label for="price_max">Максимальная цена:</label>
+                    <input type="number" name="price_max" id="price_max" value="{{ filter.price_max.value }}">
+                </div>
+                <div class="form-group">
+                    <label for="category">Категория:</label>
+                    <select name="category" id="category">
+                        <option value="">Выберите категорию</option>
+                        {% for i in  filter.category.choices.items %}
+                            <option {% if filter.category.value == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <button type="submit" class="form__submit-btn">Применить</button>
             </form>
         </div>
@@ -42,7 +58,7 @@
 </div>
 
 <div class="pagination">
-    <span class="step-links">
+    <div class="step-links">
         {% if data.previous != null %}
             <a class="pagination__link" href="?page=1">&laquo; Первая</a>
             <a class="pagination__link" href="{{ data.previous }}">Предыдущая</a>
@@ -52,7 +68,7 @@
             <a class="pagination__link" href="{{ data.next }}">Следующая</a>
             <a class="pagination__link" href="{{ data.next }}">Последняя &raquo;</a>
         {% endif %}
-    </span>
+    </div>
 </div>
 
 {% endblock %}
