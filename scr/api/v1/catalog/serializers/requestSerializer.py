@@ -3,7 +3,9 @@ from rest_framework import serializers
 
 
 class CreateUpdateGoodSerializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(slug_field='title', queryset=Category.objects.all())
+    category = serializers.SlugRelatedField(
+        slug_field='title', queryset=Category.objects.all()
+    )
 
     class Meta:
         model = Good
@@ -21,7 +23,11 @@ class CreateUpdateGoodSerializer(serializers.ModelSerializer):
         ]
 
     def save(self, **kwargs):
-        return super().save(**kwargs, owner=self.context['request'].user, category=self.validated_data['category'])
+        return super().save(
+            **kwargs,
+            owner=self.context['request'].user,
+            category=self.validated_data['category'],
+        )
 
 
 class CreateUpdateOrderSerializer(serializers.ModelSerializer):
@@ -54,7 +60,9 @@ class CreateUpdateOrderSerializer(serializers.ModelSerializer):
 
 
 class FilterSerializer(serializers.Serializer):
-    price_min = serializers.FloatField(min_value=1, label='Минимальная цена: ', required=False)
+    price_min = serializers.FloatField(
+        min_value=1, label='Минимальная цена: ', required=False
+    )
     price_max = serializers.FloatField(label='Максимальная цена: ', required=False)
     category = serializers.ChoiceField(
         choices=Category.objects.values_list('id', 'title'),

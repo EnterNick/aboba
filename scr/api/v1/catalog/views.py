@@ -45,7 +45,6 @@ class GoodsView(ListAPIView):
     ]
     search_fields = ['title', 'description']
     ordering_fields = ['title', 'price', 'date_created']
-    permission_classes = [IsAuthenticated]
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'catalog/catalog.html'
     filter_serializer_class = FilterSerializer
@@ -81,6 +80,7 @@ class CreateGoodView(CreateAPIView):
         if response.status_code == 200:
             return redirect('all_goods')
         return response
+
 
 class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
     queryset = Good.objects.all()

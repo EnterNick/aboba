@@ -39,5 +39,6 @@ class LoginView(APIView):
         response = Response(data=token_serializer.data, status=200)
 
         response.set_cookie('accessToken', token_serializer.data['access_token'])
+        response.set_cookie('refreshToken', token_serializer.data['refresh_token'])
 
         return response
