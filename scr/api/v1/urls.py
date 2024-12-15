@@ -13,13 +13,13 @@ from .catalog.views import (
     AddToCartView,
     SingleGoodEditView,
 )
-from .user_auth.views import UsersView, UserRegistrationView, LoginView
+from .user_auth.views import UserRegistrationView, LoginView, LogoutView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 
 user_urlpatterns = [
-    path('', UsersView.as_view(), name='all_users'),
     path('registration/', UserRegistrationView.as_view(), name='registration'),
     path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('reset_password/', PasswordResetView.as_view(), name='reset_password'),
     path(
         'reset_password_sent/',

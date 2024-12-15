@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from .serializers.modelSerializer import UserSerializer
 from .serializers.responseSerilaizers import UserCartSerializer
+from ..utils import get_user
 
 
 class UserProfileView(RetrieveAPIView):
@@ -19,7 +20,7 @@ class UserProfileView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         return Response(
-            data={'user': super().get(self, request, *args, **kwargs).data},
+            data={'instance': super().get(self, request, *args, **kwargs).data, 'user': get_user(request),},
             template_name=self.template_name,
         )
 

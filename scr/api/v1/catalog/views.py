@@ -19,6 +19,7 @@ from .serializers.requestSerializer import (
     CreateUpdateOrderSerializer,
     FilterSerializer,
 )
+from ..utils import get_user
 from ...auth.permissions import IsStaff, IsOwner
 
 
@@ -57,6 +58,7 @@ class GoodsView(ListAPIView):
             data={
                 'data': super().get(self, request, *args, **kwargs).data,
                 'filter': filter_serializer,
+                'user': get_user(request),
             },
             template_name=self.template_name,
         )
@@ -77,6 +79,7 @@ class CreateGoodView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
+        response.data['user'] = get_user(request)
         if response.status_code == 200:
             return redirect('all_goods')
         return response
@@ -97,12 +100,16 @@ class SingleGoodView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
+        response.data['user'] = get_user(request)
+
         if response.status_code != 200:
             return response
+
         instance = self.get_object()
         if instance.owner != request.user:
             instance.has_seen += 1
             instance.save()
+
         return response
 
 

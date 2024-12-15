@@ -121,7 +121,7 @@ a {
   display: block;
 }
 .header__logo-image {
-  max-width: 150px;
+  max-width: 40px;
 }
 .header__nav-list {
   display: flex;
@@ -158,6 +158,9 @@ a {
   transition: color 0.3s;
   display: flex;
   align-items: center;
+  background: none;
+  outline: none;
+  border: none;
 }
 .header__nav__actions-link:hover {
   color: #6ca735;
@@ -171,17 +174,10 @@ a {
 .header__nav__actions-link--primary:hover {
   background-color: #0056b3;
 }
-.header__nav__actions-link--cart {
-  position: relative;
-}
-.header__nav__actions-link--cart .header__cart-icon {
+.header__nav__actions-link-icon {
   display: inline-block;
   width: 24px;
   height: 24px;
-  background-image: url("cart-icon.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  margin-right: 0.5rem;
 }
 
 @media (max-width: 768px) {
@@ -245,6 +241,24 @@ a {
 }
 .products__product__image:hover {
   transform: scale(1.05);
+}
+.products__filters {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 52;
+}
+.products__filters-close {
+  float: right;
+  position: relative;
+  bottom: 10px;
+  cursor: pointer;
 }
 
 .pagination {
@@ -505,6 +519,7 @@ a {
   border-color: #007bff;
   outline: none;
 }
+.form__btn,
 .form button {
   padding: 10px 15px;
   background-color: #007bff;
@@ -516,6 +531,7 @@ a {
   transition: background-color 0.3s;
   margin-top: 10px;
 }
+.form__btn:hover,
 .form button:hover {
   background-color: #0056b3;
 }

@@ -49,4 +49,4 @@ class CustomJWTAuthentication(BaseAuthentication):
         if not user.is_active:
             raise AuthenticationFailed('user is inactive')
 
-        return user, None
+        return user, access_token

@@ -160,7 +160,7 @@ a {
         }
 
         &-image {
-            max-width: 150px;
+            max-width: 40px;
         }
     }
 
@@ -207,6 +207,9 @@ a {
                 transition: color 0.3s;
                 display: flex;
                 align-items: center;
+                background: none;
+                outline: none;
+                border: none;
     
                 &:hover {
                     color: $color-green;
@@ -223,18 +226,11 @@ a {
                     }
                 }
     
-                &--cart {
-                    position: relative;
-    
-                    .header__cart-icon {
-                        display: inline-block;
-                        width: 24px;
-                        height: 24px;
-                        background-image: url('cart-icon.svg');
-                        background-repeat: no-repeat;
-                        background-position: center;
-                        margin-right: 0.5rem;
-                    }
+
+                &-icon {
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
                 }
             }
         }
@@ -317,6 +313,26 @@ a {
             &:hover {
                 transform: scale(1.05); 
             }
+        }
+    }
+
+    &__filters {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: $color-shadow;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 52;
+
+        &-close {
+            float: right;
+            position: relative;
+            bottom: 10px;
+            cursor: pointer;
         }
     }
 }
@@ -623,6 +639,7 @@ a {
         }
     }
 
+    &__btn,
     button {
         padding: 10px 15px; 
         background-color: $color-blue; 
