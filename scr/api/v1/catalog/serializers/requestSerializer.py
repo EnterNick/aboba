@@ -69,3 +69,6 @@ class FilterSerializer(serializers.Serializer):
         label='Категория: ',
         required=False,
     )
+    search = serializers.CharField(
+        default='',
+    )

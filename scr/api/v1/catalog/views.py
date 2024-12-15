@@ -38,6 +38,7 @@ class PriceFilter(FilterSet):
 class GoodsView(ListAPIView):
     queryset = Good.objects.order_by('-orders')
     serializer_class = GoodSerializer
+
     filterset_class = PriceFilter
     filter_backends = [
         filters.SearchFilter,
@@ -46,6 +47,7 @@ class GoodsView(ListAPIView):
     ]
     search_fields = ['title', 'description']
     ordering_fields = ['title', 'price', 'date_created']
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'catalog/catalog.html'
     filter_serializer_class = FilterSerializer
