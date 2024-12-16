@@ -15,3 +15,12 @@ class IsOwner(IsStaff):
         ):
             return False
         return True
+
+
+class IsNotOwner(IsStaff):
+    def has_object_permission(self, request, view, obj):
+        if (obj.owner == request.user) or not super().has_object_permission(
+            request, view, obj
+        ):
+            return False
+        return True

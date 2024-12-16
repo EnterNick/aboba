@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="cart">
+    <h2 class="cart__title">Ваша корзина</h2>
+    {% if cart %}
+        <ul class="cart__items">
+            {% for item in cart %}
+                <li class="cart__item">
+                    <div class="cart__item-image">
+                        <img src="{{ item.image }}" alt="{{ item.title }}" />
+                    </div>
+                    <div class="cart__item-info">
+                        <h3 class="cart__item-title">{{ item.title }}</h3>
+                        <p class="cart__item-description">{{ item.description }}</p>
+                        <p class="cart__item-price">Цена: <span class="cart__item-price-value">{{ item.price }}</span> ₽</p>
+                        <p class="cart__item-val">Добавлено: <span class="cart__item-val-value">{{ item.val }}</span></p>
+                    </div>
+                    <div class="cart__item_actions">
+                        <form action="{% url 'add_to_cart' item.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" hidden value=-1 name="value">
+                            <button type="submit" class="cart__item-btn">Удалить</button>
+                        </form>
+                        <form action="{% url 'add_to_cart' item.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" hidden value=1 name="value">
+                            <button type="submit" class="cart__item-btn">Добавить</button>
+                        </form>
+                        <form action="{% url 'good' item.id %}">
+                            {% csrf_token %}
+                           <button class="cart__item-btn" type="submit">На страницу</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="cart__total">
+            <p class="cart__total-label">Итого:</p>
+            <p class="cart__total-value">0 руб.</p>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button class="cart__checkout-btn">Оформить заказ</button>
+        </form>
+    {% else %}
+        <p>Ваша корзина пуста.</p>  
+    {% endif %}
+</div>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

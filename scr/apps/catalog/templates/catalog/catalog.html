@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+{% load static %}
+
+{% block content %}
+
+<div class="products">
+    <button class="form__btn">Фильтры</button>  
+    <form class="form">
+        {% csrf_token %}
+        <div class="products__filters">
+            <div class="form" style="padding-left: 27px;">
+                <span class="products__filters-close">x</span>
+                <fieldset>
+                    <div class="form-group">
+                        <label for="price_min">Минимальная цена:</label>
+                        <input type="number" id="price_min" name="price_min" value="{{ filter.price_min.value }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="price_max">Максимальная цена:</label>
+                        <input type="number" name="price_max" id="price_max" value="{{ filter.price_max.value }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Категория:</label>
+                        <select name="category" id="category">
+                            <option value="">Выберите категорию</option>
+                            {% for i in  filter.category.choices.items %}
+                                <option {% if filter.category.value == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit">Применить</button>
+                </fieldset>
+            </div>
+        </div>
+        <input type="search" name="search" value="{{ filter.search.value }}">
+        <button type="submit">Искать</button>
+    </form>
+
+    <h1 class="products__title">Товары</h1>
+    
+    <div class="products__wrapper">
+        {% if data.results %}
+            {% for product in data.results %}
+                <a class="products__product" href="{% url 'good' product.id %}">
+                    <div class="products__product__header">
+                        <img class="products__product__image" src="{{ product.image }}" alt="{{ product.title }}">
+                        <h2 class="products__product__title">{{ product.title }}</h2>
+                    </div>
+                    <div class="products__product__body">
+                        <p class="products__product__description">{{ product.description }}</p>
+                        <p class="products__product__price">
+                            Цена: <span class="products__product__price-value">{{ product.price }} руб.</span>
+                        </p>
+                        <p class="products__product__quantity">Осталось: {{ product.value }}</p>
+                        <p class="products__product__category">Категория: {{ product.category }}</p>
+                        <p class="products__product__orders">Заказов: {{ product.orders }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p class="products__no-results">Товары не найдены.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="pagination">
+    <div class="step-links">
+        {% if data.previous != null %}
+            <a class="pagination__link" href="?page=1">&laquo; Первая</a>
+            <a class="pagination__link" href="{{ data.previous }}">Предыдущая</a>
+        {% endif %}
+
+        {% if data.next != null %}
+            <a class="pagination__link" href="{{ data.next }}">Следующая</a>
+            <a class="pagination__link" href="{{ data.next }}">Последняя &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+
+<script src="{% static 'js/catalog.js' %}">
+</script>
+{% endblock %}

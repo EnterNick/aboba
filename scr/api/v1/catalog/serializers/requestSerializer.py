@@ -1,9 +1,14 @@
+from apps.catalog.models import Good, Order, Category
 from rest_framework import serializers
-
-from apps.catalog.models import Good, Order
 
 
 class CreateUpdateGoodSerializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(
+        slug_field='title', queryset=Category.objects.all()
+    )
+    price = serializers.FloatField(min_value=1)
+    value = serializers.IntegerField(min_value=1)
+
     class Meta:
         model = Good
         exclude = [
@@ -13,14 +18,18 @@ class CreateUpdateGoodSerializer(serializers.ModelSerializer):
             'orders',
             'have_bought',
             'has_seen',
-            'income'
+            'income',
         ]
         read_only_fields = [
             'owner',
         ]
 
     def save(self, **kwargs):
-        return super().save(**kwargs, owner=self.context['request'].user)
+        return super().save(
+            **kwargs,
+            owner=self.context['request'].user,
+            category=self.validated_data['category'],
+        )
 
 
 class CreateUpdateOrderSerializer(serializers.ModelSerializer):
@@ -48,6 +57,23 @@ class CreateUpdateOrderSerializer(serializers.ModelSerializer):
         fields['value'] = serializers.IntegerField(
             max_value=Good.objects.get(pk=pk).value,
             initial=1,
-            min_value=1,
         )
         return fields
+
+
+class FilterSerializer(serializers.Serializer):
+    price_min = serializers.FloatField(
+        min_value=1, label='Минимальная цена: ', required=False
+    )
+    price_max = serializers.FloatField(label='Максимальная цена: ', required=False)
+    try:
+        category = serializers.ChoiceField(
+            choices=Category.objects.values_list('id', 'title'),
+            label='Категория: ',
+            required=False,
+        )
+    except Exception:
+        pass
+    search = serializers.CharField(
+        default='',
+    )

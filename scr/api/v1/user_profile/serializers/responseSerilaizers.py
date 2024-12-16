@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from ...catalog.serializers.modelSerializer import GoodSerializer
+from ...catalog.serializers.modelSerializer import GoodValueInCartSerializer
 
 
 class UserCartSerializer(serializers.ModelSerializer):
@@ -14,4 +14,6 @@ class UserCartSerializer(serializers.ModelSerializer):
         ]
 
     def get_cart(self, user):
-        return GoodSerializer(user.cart, many=True).data
+        return GoodValueInCartSerializer(
+            user.cart, many=True, context=self.context
+        ).data

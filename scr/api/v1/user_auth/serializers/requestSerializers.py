@@ -26,6 +26,8 @@ class LoginRequestSerializer(serializers.Serializer):
 
 
 class RegistrationRequestSerializer(serializers.ModelSerializer):
+    password_again = serializers.CharField(required=True, write_only=True)
+
     class Meta:
         model = get_user_model()
         fields = [
@@ -35,6 +37,7 @@ class RegistrationRequestSerializer(serializers.ModelSerializer):
             'email',
             'avatar',
             'password',
+            'password_again',
         ]
         extra_kwargs = {
             'password': {
@@ -42,7 +45,13 @@ class RegistrationRequestSerializer(serializers.ModelSerializer):
             },
         }
 
-    @staticmethod
-    def validate_password(password):
+    def validate_password(self, password):
+        if password != self.initial_data['password_again']:
+            raise ValidationError('Пароли не совпадают!')
         validate_password(password)
         return make_password(password)
+
+    def create(self, validated_data):
+        data = self.validated_data
+        data.pop('password_again')
+        return super().create(data)

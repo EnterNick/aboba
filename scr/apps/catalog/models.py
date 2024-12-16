@@ -4,6 +4,17 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+
+def path_to_img(user, filename):
+    return f'user_{user.id}/{filename}'
+
+
 class Good(models.Model):
     title = models.CharField(max_length=100)
 
@@ -23,7 +34,7 @@ class Good(models.Model):
         get_user_model(), on_delete=models.CASCADE, null=True, blank=True
     )
 
-    category = models.CharField(max_length=100, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
 
     orders = models.IntegerField(default=0)
 
@@ -32,6 +43,11 @@ class Good(models.Model):
     has_seen = models.IntegerField(default=0)
 
     income = models.FloatField(default=0)
+
+    image = models.ImageField(
+        default='default-good.jpg',
+        upload_to=path_to_img,
+    )
 
 
 class Order(models.Model):

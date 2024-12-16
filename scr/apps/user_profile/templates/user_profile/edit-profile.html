@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<form class="form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input hidden value="PUT" name="method">
+    <h1 class="form__title">Редактировать профиль</h1>
+    <fieldset>
+        <div class="form-group">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" value="{{username}}" required>
+        </div>
+        <div class="form-group">
+            <label for="first_name">Имя:</label>
+            <textarea id="first_name" name="first_name" required>{{first_name}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Фамилия:</label>
+            <input type="text" id="last_name" name="last_name" value="{{last_name}}" required>
+        </div>
+        <div class="form-group">
+            <label for="avatar">Аватар:</label>
+            <input type="file" id="avatar" required>
+        </div>
+        <button type="submit">Подтвердить</button>
+    </fieldset>
+</form>
+
+<br>
+
+<h2 class="form__title">Предпросмотр</h2>
+<div class="profile__header">
+    <div class="profile__header-avatar">
+        <img src="{{ avatar }}" alt="Avatar" class="profile__header-avatar-image">
+    </div>
+    <div class="profile__header-info">
+        <h2 class="profile__header-name"></h2>
+        <p class="profile__header-name"></p>
+        <p class="profile__header-email">{{email}}</p>
+    </div>
+</div>
+
+<script>
+    const username = document.querySelector('#username')
+    const preUsername = Array.from(document.querySelectorAll('.profile__header-name'))[0]
+
+    preUsername.textContent = username.value
+
+    username.addEventListener(
+    'change',
+     function ()
+        {
+            preUsername.textContent = username.value
+        }
+    )
+
+    const firstName = document.querySelector('#first_name')
+    const lastName = document.querySelector('#last_name')
+    const preName = Array.from(document.querySelectorAll('.profile__header-name'))[1]
+
+    preName.textContent = firstName.value + ' ' + lastName.value
+
+    firstName.addEventListener(
+    'change',
+     function ()
+        {
+            preName.textContent = firstName.value + ' ' + lastName.value
+        }
+    )
+
+    lastName.addEventListener(
+    'change',
+    function ()
+        {
+            preName.textContent = first_name.value + ' ' + last_name.value
+        }
+    )
+
+    const preImage = document.querySelector('.profile__header-avatar-image')
+
+    function imagePreview () {
+        const image = document.querySelector("#avatar").files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener(
+            'load',
+            function () {
+                preImage.src = reader.result;
+                preImages.src = reader.result;
+            }
+        )
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }
+</script>
+{% endblock %}
