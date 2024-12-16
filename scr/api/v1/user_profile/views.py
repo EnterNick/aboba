@@ -31,7 +31,11 @@ class UserProfileView(RetrieveAPIView):
         return self.request.user
 
     def get_serializer_class(self):
-        return self.serializer_class if not self.request.user.is_staff else StaffUserSerializer
+        return (
+            self.serializer_class
+            if not self.request.user.is_staff
+            else StaffUserSerializer
+        )
 
 
 class UserCartView(RetrieveAPIView):
