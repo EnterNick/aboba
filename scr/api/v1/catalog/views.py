@@ -95,9 +95,19 @@ class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
     template_name = 'catalog/edit-good.html'
 
     def get(self, request, *args, **kwargs):
-        response = super().get(self, request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
         response.data['categories'] = Category.objects.values_list('title', flat=True)
         return response
+
+    def post(self, request, *args, **kwargs):
+        if self.request.POST.get('method') == 'PUT':
+            self.put(request, *args, **kwargs)
+            return self.get(request, *args, **kwargs)
+        elif self.request.POST.get('method') == 'DELETE':
+            self.delete(request, *args, **kwargs)
+            return redirect('all_goods')
+        else:
+            return Response(data={'message': 'method not allowed'}, status=405)
 
 
 class SingleGoodView(RetrieveAPIView):

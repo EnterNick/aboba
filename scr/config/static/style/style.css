@@ -244,24 +244,6 @@ a {
 .products__product__image:hover {
   transform: scale(1.05);
 }
-.products__filters {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 52;
-}
-.products__filters-close {
-  float: right;
-  position: relative;
-  bottom: 10px;
-  cursor: pointer;
-}
 
 .pagination {
   display: flex;
@@ -539,4 +521,35 @@ a {
 .form__btn:hover,
 .form button:hover {
   background-color: #0056b3;
+}
+.form__danger {
+  background-color: #a11c1c;
+}
+.form__danger:hover {
+  background-color: #751313;
+}
+
+.modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 52;
+}
+.modal-close {
+  float: right;
+  position: relative;
+  bottom: 10px;
+  cursor: pointer;
+}
+
+#modal-delete-btn {
+  position: absolute;
+  right: 10px;
+  top: 80px;
 }

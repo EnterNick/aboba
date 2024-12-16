@@ -6,6 +6,8 @@ class CreateUpdateGoodSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         slug_field='title', queryset=Category.objects.all()
     )
+    price = serializers.FloatField(min_value=1)
+    value = serializers.IntegerField(min_value=1)
 
     class Meta:
         model = Good
