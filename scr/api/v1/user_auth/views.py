@@ -22,7 +22,9 @@ class UserRegistrationView(CreateAPIView):
     template_name = 'user_auth/registration.html'
 
     def get(self, request, *args, **kwargs):
-        return Response(template_name=self.template_name, data={'user': get_user(request)})
+        return Response(
+            template_name=self.template_name, data={'user': get_user(request)}
+        )
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -55,7 +57,9 @@ class LoginView(APIView):
         return response
 
     def get(self, request, *args, **kwargs):
-        return Response(template_name=self.template_name, data={'user': get_user(request)})
+        return Response(
+            template_name=self.template_name, data={'user': get_user(request)}
+        )
 
 
 class LogoutView(APIView):

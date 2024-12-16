@@ -20,7 +20,7 @@ from .serializers.requestSerializer import (
     FilterSerializer,
 )
 from ..utils import get_user
-from ...auth.permissions import IsStaff, IsOwner
+from ...auth.permissions import IsStaff, IsOwner, IsNotOwner
 
 
 class PriceFilter(FilterSet):
@@ -96,7 +96,7 @@ class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
 class SingleGoodView(RetrieveAPIView):
     queryset = Good.objects.all()
     serializer_class = GoodSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsNotOwner]
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'catalog/good-detail.html'
 

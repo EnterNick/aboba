@@ -22,7 +22,7 @@
                 <form class="form" method="post" action="{% url 'add_to_cart' id %}">
                     {% csrf_token %}
                     <input type="number" required value=1 name="value" min=1>
-                    <button type="submit" class="form__btn" {% if value <= 0 %} disabled {% endif %}>Добавить в корзину</button>
+                    <button type="submit" class="form__btn" {% if value <= 0 or owner == user.id %} disabled {% endif %}>Добавить в корзину</button>
                     <script>
                         const btn = document.querySelector('.form__btn')
                         if (btn.disabled) {

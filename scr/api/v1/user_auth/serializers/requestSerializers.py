@@ -50,7 +50,7 @@ class RegistrationRequestSerializer(serializers.ModelSerializer):
             raise ValidationError('Пароли не совпадают!')
         validate_password(password)
         return make_password(password)
-    
+
     def create(self, validated_data):
         data = self.validated_data
         data.pop('password_again')

@@ -208,6 +208,8 @@ a {
   text-align: center;
   transition: all 0.3s ease-in-out;
   min-width: 300px;
+  max-width: 340px;
+  height: auto;
 }
 .products__product__header {
   border-bottom: 1px solid #ccc;
@@ -327,6 +329,9 @@ a {
   font-weight: bold;
   margin-bottom: 10px;
   color: #007bff;
+}
+.product-page__details_price-value {
+  text-wrap: wrap;
 }
 
 .cart {

@@ -20,7 +20,10 @@ class UserProfileView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         return Response(
-            data={'instance': super().get(self, request, *args, **kwargs).data, 'user': get_user(request),},
+            data={
+                'instance': super().get(self, request, *args, **kwargs).data,
+                'user': get_user(request),
+            },
             template_name=self.template_name,
         )
 
