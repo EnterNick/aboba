@@ -13,25 +13,50 @@
             </div>
     </div>
     <div class="profile__cart">
-        <h3 class="profile__cart-title">Корзина</h3>
-        {% if instance.cart %}
-        <ul class="profile__cart-items">
-            {% for product in instance.cart %}
-            <li class="profile__cart-item">
-                <a href="{% url 'good' product.id %}" class="profile__cart-link">
-                    <div class="profile__cart-info">
-                        <h4 class="profile__cart-title">{{ product.title }}</h4>
-                        <p class="profile__cart-price">{{ product.price }} RUB</p>
-                    </div>
-                    <div class="profile__cart-action">
-                        <button class="profile__cart-btn">Перейти на страницу</button>
-                    </div>
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
+        {% if not user.is_staff %}
+            <h3 class="profile__cart-title">Корзина</h3>
+            {% if instance.cart %}
+            <ul class="profile__cart-items">
+                {% for product in instance.cart %}
+                <li class="profile__cart-item">
+                    <a href="{% url 'good' product.id %}" class="profile__cart-link">
+                        <div class="profile__cart-info">
+                            <h4 class="profile__cart-title">{{ product.title }}</h4>
+                            <p class="profile__cart-price">{{ product.price }} RUB</p>
+                        </div>
+                        <div class="profile__cart-action">
+                            <button class="profile__cart-btn">Перейти на страницу</button>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="profile__cart-empty">Корзина пуста.</p>
+            {% endif %}
+
         {% else %}
-        <p class="profile__cart-empty">Корзина пуста.</p>
+            <h3 class="profile__cart-title">Ваши товары</h3>
+
+            {% if instance.goods %}
+            <ul class="profile__cart-items">
+                {% for product in instance.goods %}
+                <li class="profile__cart-item">
+                    <a href="{% url 'edit_good' pk=product.id %}" class="profile__cart-link">
+                        <div class="profile__cart-info">
+                            <h4 class="profile__cart-title">{{ product.title }}</h4>
+                            <p class="profile__cart-price">{{ product.price }} RUB</p>
+                        </div>
+                        <div class="profile__cart-action">
+                            <button class="profile__cart-btn">Редактиовать</button>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="profile__cart-empty">Вы ещё не добавили товаров.</p>
+            {% endif %}
         {% endif %}
     </div>
 </div>

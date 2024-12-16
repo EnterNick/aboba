@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from .serializers.modelSerializer import UserSerializer
+from .serializers.modelSerializer import UserSerializer, StaffUserSerializer
 from .serializers.responseSerilaizers import UserCartSerializer
 from ..utils import get_user
 
@@ -29,6 +29,9 @@ class UserProfileView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+    def get_serializer_class(self):
+        return self.serializer_class if not self.request.user.is_staff else StaffUserSerializer
 
 
 class UserCartView(RetrieveAPIView):

@@ -26,6 +26,9 @@
                     <a href="{% url 'user_cart' %}" class="header__nav__actions-link">
                         <img src="{% static 'img/cart.png' %}" alt="Корзина" class="header__nav__actions-link-icon">
                     </a>
+                    {% if user.is_staff %}
+                        <a href="{% url 'add_good' %}" class="header__nav__actions-link">Добавить товар</a>
+                    {% endif %}
                     <form action="{% url 'logout' %}" method="post">
                         <button type="submit" class="header__nav__actions-link">Выход</button>
                     </form>

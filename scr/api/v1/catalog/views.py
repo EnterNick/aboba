@@ -89,7 +89,7 @@ class CreateGoodView(CreateAPIView):
 
 class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
     queryset = Good.objects.all()
-    serializer_class = GoodSerializer
+    serializer_class = CreateUpdateGoodSerializer
     permission_classes = [IsOwner]
 
 
