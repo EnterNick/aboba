@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<button id="modal-delete-btn" class="form__btn form__danger">Удалить</button>
+<div class="modal">
+    <form method="post" class="form" style="padding-left: 27px;">
+        {% csrf_token %}
+        <input hidden value="DELETE" name="method">
+        <span id="modal-delete-btn-close" class="modal-close">x</span>
+        <div class="form-group">
+            <label>Вы уверены?</label>
+            <button type="submit" style="background-color: #a11c1c;">Удалить</button>
+        </div>
+    </form>
+</div>
+<form class="form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input hidden value="PUT" name="method">
+    <h1 class="form__title">Редактировать профиль</h1>
+    <fieldset>
+        <div class="form-group">
+            <label for="username">Название:</label>
+            <input type="text" id="username" name="username" value="{{username}}" required>
+        </div>
+        <div class="form-group">
+            <label for="first_name">Описание:</label>
+            <textarea id="first_name" name="first_name" required>{{first_name}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Цена:</label>
+            <input type="number" id="last_name" name="last_name" step="0.01" value="{{last_name}}" min=1 required>
+        </div>
+        <div class="form-group">
+            <label for="avatar">Количество:</label>
+            <input type="number" id="avatar" name="avatar" value="{{avatar}}" min=1 required>
+        </div>
+        <button type="submit">Подтвердить</button>
+    </fieldset>
+</form>
+
+<br>
+
+<h2 class="form__title">Предпросмотр</h2>
+
+{% endblock %}

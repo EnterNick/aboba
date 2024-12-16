@@ -41,7 +41,7 @@ user_urlpatterns = [
 profile_urlpatterns = [
     path('', UserProfileView.as_view(), name='profile'),
     path('cart/', UserCartView.as_view(), name='user_cart'),
-    path('update/', UserUpdateView.as_view(), name='profile_update'),
+    path('edit/', UserUpdateView.as_view(), name='profile_update'),
 ]
 
 goods_urlpatterns = [

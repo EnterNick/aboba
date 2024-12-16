@@ -7,6 +7,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 
 from .serializers.modelSerializer import UserSerializer, StaffUserSerializer
+from .serializers.requestSerializers import UpdateUserSerializer
 from .serializers.responseSerilaizers import UserCartSerializer
 from ..utils import get_user
 
@@ -63,7 +64,7 @@ class UserCartView(RetrieveAPIView):
 
 
 class UserUpdateView(RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UpdateUserSerializer
     queryset = get_user_model().objects.all()
     permission_classes = [IsAuthenticated]
 
