@@ -91,6 +91,13 @@ class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
     queryset = Good.objects.all()
     serializer_class = CreateUpdateGoodSerializer
     permission_classes = [IsOwner]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/edit-good.html'
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(self, request, *args, **kwargs)
+        response.data['categories'] = Category.objects.values_list('title', flat=True)
+        return response
 
 
 class SingleGoodView(RetrieveAPIView):
