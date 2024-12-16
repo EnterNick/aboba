@@ -72,3 +72,10 @@ class UserUpdateView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        if self.request.POST.get('method') == 'PUT':
+            self.put(request, *args, **kwargs)
+            return self.get(request, *args, **kwargs)
+        else:
+            return Response(data={'message': 'method not allowed'}, status=405)
