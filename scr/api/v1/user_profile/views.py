@@ -67,6 +67,8 @@ class UserUpdateView(RetrieveUpdateAPIView):
     serializer_class = UpdateUserSerializer
     queryset = get_user_model().objects.all()
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'user_profile/edit-profile.html'
 
     def get_object(self):
         return self.request.user
