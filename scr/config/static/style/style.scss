@@ -22,6 +22,7 @@ $color-shadow: rgba(0, 0, 0, 0.1);
 
 body {
     font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
 }
 
 
@@ -315,26 +316,6 @@ a {
             &:hover {
                 transform: scale(1.05); 
             }
-        }
-    }
-
-    &__filters {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: $color-shadow;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 52;
-
-        &-close {
-            float: right;
-            position: relative;
-            bottom: 10px;
-            cursor: pointer;
         }
     }
 }
@@ -659,6 +640,65 @@ a {
 
         &:hover {
             background-color: $color-blue-dark;
+        }
+    }
+
+    &__danger {
+        background-color: #a11c1c;
+
+        &:hover {
+            background-color: #751313;
+        }
+    }
+}
+
+.modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $color-shadow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 52;
+
+    &-close {
+        float: right;
+        position: relative;
+        bottom: 10px;
+        cursor: pointer;
+    }
+}
+
+#modal-delete-btn {
+    position: absolute;
+    left: 10px;
+    top: 80px;
+}
+
+.preview {
+    position: absolute;
+    right: -52%;
+    top: 80px;
+    flex-direction: column;
+    gap: 50px; 
+    margin-bottom: 50px;
+    align-items: center;
+    background-color: $color-background;
+    padding: 50px;
+    justify-content: center;
+    height: 100%;
+    border-left: 1px solid $color-gray-dark;
+    transition: right 2s ease-in-out;
+    z-index: 1;
+
+    &__activate {
+        right: -40%;
+
+        &-full {
+            right: 0;
         }
     }
 }

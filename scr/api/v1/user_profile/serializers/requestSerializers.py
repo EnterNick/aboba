@@ -10,4 +10,8 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'avatar',
+            'email',
+        ]
+        read_only_fileds = [
+            'email',
         ]

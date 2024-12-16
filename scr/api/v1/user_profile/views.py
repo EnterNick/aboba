@@ -7,6 +7,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 
 from .serializers.modelSerializer import UserSerializer, StaffUserSerializer
+from .serializers.requestSerializers import UpdateUserSerializer
 from .serializers.responseSerilaizers import UserCartSerializer
 from ..utils import get_user
 
@@ -63,9 +64,18 @@ class UserCartView(RetrieveAPIView):
 
 
 class UserUpdateView(RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UpdateUserSerializer
     queryset = get_user_model().objects.all()
     permission_classes = [IsAuthenticated]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'user_profile/edit-profile.html'
 
     def get_object(self):
         return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        if self.request.POST.get('method') == 'PUT':
+            self.put(request, *args, **kwargs)
+            return self.get(request, *args, **kwargs)
+        else:
+            return Response(data={'message': 'method not allowed'}, status=405)
