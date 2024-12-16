@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="login">
+    <form class="form" method="post">
+        {% csrf_token %}
+        <h1 class="form__title">Вход</h1>
+        <fieldset>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="login__label">Пароль</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login__button">Войти</button>
+            <div class="login__footer">
+                <a href="{% url 'reset_password' %}" class="login__link">Забыли пароль?</a>
+                <a href="{% url 'registration' %}" class="login__link">Регистрация</a>
+            </div>
+            <p>{{errors.non_field_errors.0}}</p>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

@@ -19,7 +19,8 @@ from .serializers.requestSerializer import (
     CreateUpdateOrderSerializer,
     FilterSerializer,
 )
-from ...auth.permissions import IsStaff, IsOwner
+from ..utils import get_user
+from ...auth.permissions import IsStaff, IsOwner, IsNotOwner
 
 
 class PriceFilter(FilterSet):
@@ -37,6 +38,7 @@ class PriceFilter(FilterSet):
 class GoodsView(ListAPIView):
     queryset = Good.objects.order_by('-orders')
     serializer_class = GoodSerializer
+
     filterset_class = PriceFilter
     filter_backends = [
         filters.SearchFilter,
@@ -45,7 +47,7 @@ class GoodsView(ListAPIView):
     ]
     search_fields = ['title', 'description']
     ordering_fields = ['title', 'price', 'date_created']
-    permission_classes = [IsAuthenticated]
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'catalog/catalog.html'
     filter_serializer_class = FilterSerializer
@@ -53,11 +55,12 @@ class GoodsView(ListAPIView):
     def get(self, request, *args, **kwargs):
         filter_serializer = self.filter_serializer_class(data=request.GET)
         if not filter_serializer.is_valid():
-            filter_serializer = self.filter_serializer_class()
+            pass
         return Response(
             data={
                 'data': super().get(self, request, *args, **kwargs).data,
                 'filter': filter_serializer,
+                'user': get_user(request),
             },
             template_name=self.template_name,
         )
@@ -67,30 +70,48 @@ class CreateGoodView(CreateAPIView):
     queryset = Good.objects.all()
     serializer_class = CreateUpdateGoodSerializer
     permission_classes = [IsStaff]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/create-good.html'
+
+    def get(self, request, *args, **kwargs):
+        return Response(
+            data={'categories': Category.objects.values_list('title', flat=True)},
+            template_name=self.template_name,
+        )
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        response.data['user'] = get_user(request)
+        if response.status_code == 200:
+            return redirect('all_goods')
+        return response
 
 
 class SingleGoodEditView(RetrieveUpdateDestroyAPIView):
     queryset = Good.objects.all()
-    serializer_class = GoodSerializer
+    serializer_class = CreateUpdateGoodSerializer
     permission_classes = [IsOwner]
 
 
 class SingleGoodView(RetrieveAPIView):
     queryset = Good.objects.all()
     serializer_class = GoodSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsNotOwner]
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'catalog/good-detail.html'
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
+        response.data['user'] = get_user(request)
+
         if response.status_code != 200:
             return response
+
         instance = self.get_object()
         if instance.owner != request.user:
             instance.has_seen += 1
             instance.save()
-        response.data = {'product': response.data}
+
         return response
 
 

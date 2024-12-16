@@ -5,7 +5,7 @@
         <div class="header__wrapper">
             <div class="header__logo">
                 <a href="{% url 'all_goods' %}" class="header__logo-link">
-                    <img src="{% static 'img/logo.svg' %}" alt="Лого" class="header__logo-image">
+                    <img src="{% static 'img/logo.png' %}" alt="Лого" class="header__logo-image">
                 </a>
             </div>
             <nav class="header__nav">
@@ -19,11 +19,23 @@
                 </ul>
             </nav>
             <div class="header__nav__actions">
-                <a href="{% url 'user_cart' %}" class="header__nav__actions-link header__nav__actions-link--cart">
-                    <img src="{% static 'img/cart.svg' %}" alt="Корзина" class="header__cart-icon">
-                </a>
-                <a href="{% url 'login' %}" class="header__nav__actions-link">Войти</a>
-                <a href="{% url 'registration' %}" class="header__nav__actions-link header__nav__actions-link--primary">Зарегистрироваться</a>
+                {% if user != 'none' %}
+                    <a href="{% url 'profile' %}" class="header__nav__actions-link">
+                        <img src="{% static 'img/profile.png' %}" alt="Профиль" class="header__nav__actions-link-icon">
+                    </a>
+                    <a href="{% url 'user_cart' %}" class="header__nav__actions-link">
+                        <img src="{% static 'img/cart.png' %}" alt="Корзина" class="header__nav__actions-link-icon">
+                    </a>
+                    {% if user.is_staff %}
+                        <a href="{% url 'add_good' %}" class="header__nav__actions-link">Добавить товар</a>
+                    {% endif %}
+                    <form action="{% url 'logout' %}" method="post">
+                        <button type="submit" class="header__nav__actions-link">Выход</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="header__nav__actions-link">Войти</a>
+                    <a href="{% url 'registration' %}" class="header__nav__actions-link header__nav__actions-link--primary">Зарегистрироваться</a>
+                {% endif %}
             </div>
         </div>
     </div>

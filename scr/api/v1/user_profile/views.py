@@ -6,8 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from .serializers.modelSerializer import UserSerializer
+from .serializers.modelSerializer import UserSerializer, StaffUserSerializer
 from .serializers.responseSerilaizers import UserCartSerializer
+from ..utils import get_user
 
 
 class UserProfileView(RetrieveAPIView):
@@ -19,12 +20,22 @@ class UserProfileView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         return Response(
-            data={'user': super().get(self, request, *args, **kwargs).data},
+            data={
+                'instance': super().get(self, request, *args, **kwargs).data,
+                'user': get_user(request),
+            },
             template_name=self.template_name,
         )
 
     def get_object(self):
         return self.request.user
+
+    def get_serializer_class(self):
+        return (
+            self.serializer_class
+            if not self.request.user.is_staff
+            else StaffUserSerializer
+        )
 
 
 class UserCartView(RetrieveAPIView):
