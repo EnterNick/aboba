@@ -17,6 +17,7 @@ from .catalog.views import (
 from .user_auth.views import UserRegistrationView, LoginView, LogoutView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 from .admin.views import AdminGoodsView, AdminSingleGoodView
+
 user_urlpatterns = [
     path('registration/', UserRegistrationView.as_view(), name='registration'),
     path('login/', LoginView.as_view(), name='login'),

@@ -35,7 +35,9 @@ class GoodAdminSerializer(serializers.ModelSerializer):
     def get_has_seen_for_last_week(good):
         visits = VisitsPerWeek.objects.filter(good=good)
         visits_instance = visits.first()
-        if not visits or visits_instance.date_crated <= (datetime.today() - timedelta(weeks=1)):
+        if not visits or visits_instance.date_crated <= (
+            datetime.today() - timedelta(weeks=1)
+        ):
             try:
                 visits_instance.delete()
             except AttributeError:

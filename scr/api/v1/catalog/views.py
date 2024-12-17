@@ -16,7 +16,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from .serializers.modelSerializer import GoodSerializer
+from .serializers.modelSerializer import GoodSerializer, MainPageGoodSerializer
 from .serializers.requestSerializer import (
     CreateUpdateGoodSerializer,
     CreateUpdateOrderSerializer,
@@ -131,10 +131,11 @@ class SingleGoodView(RetrieveAPIView):
 
         instance = self.get_object()
         if instance.owner != request.user:
-
             visits = VisitsPerWeek.objects.filter(good=instance)
             visits_instance = visits.first()
-            if not visits or visits_instance.date_crated <= (datetime.today() - timedelta(weeks=1)):
+            if not visits or visits_instance.date_crated <= (
+                datetime.today() - timedelta(weeks=1)
+            ):
                 try:
                     visits_instance.delete()
                 except AttributeError:
@@ -177,21 +178,20 @@ class AddToCartView(CreateAPIView):
 
 class MainPage(ListAPIView):
     queryset = Good.objects.all()
-    serializer_class = GoodSerializer
+    serializer_class = MainPageGoodSerializer
 
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'catalog/catalog.html'
+    template_name = 'catalog/main.html'
 
     def get(self, request, *args, **kwargs):
         response = super().get(self, request, *args, **kwargs)
-        response.data['data'] = {'results': response.data['results']}
+
+        response.data['data'] = {
+            'results': sorted(
+                response.data['results'],
+                key=lambda x: x['has_seen_last_week'],
+                reverse=True,
+            )
+        }
         response.data['user'] = get_user(request)
         return response
-
-    def get_queryset(self):
-        return self.queryset.filter(
-            date_created__range=(
-                datetime.today() - timedelta(weeks=1),
-                datetime.today(),
-            )
-        ).order_by('-orders')
