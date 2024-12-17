@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="product-page">
-    <div class="product-page__header">
+    <div class="product-page__header">      
         <h1 class="product-page__title">{{ title }}</h1>
     </div>
 
@@ -17,19 +17,9 @@
             <p class="product-page__details_field">Осталось: <span class="product-page__quantity-value">{{ value }}</span></p>
             <p class="product-page__details_field">Категория: <span class="product-page__category-value">{{ category }}</span></p>
             <p class="product-page__details_field">Заказов: <span class="product-page__orders-value">{{ orders }}</span></p>
-
-            <form class="form" method="post" action="{% url 'add_to_cart' id %}">
-                {% csrf_token %}
-                <input type="number" required value=1 name="value" min=1>
-                <button type="submit" class="form__btn" {% if value <= 0 or owner == user.id %} disabled {% endif %}>Добавить в корзину</button>
-                <script>
-                    const btn = document.querySelector('.form__btn')
-                    if (btn.disabled) {
-                        btn.style.backgroundColor = '#0056b3'
-                        btn.style.cursor = 'default'
-                    }
-                </script>
-            </form>
+            <p class="product-page__details_field">Уровень конверсии: <span class="product-page__orders-value">{{ conversion_level }}</span></p>
+            <p class="product-page__details_field">Просмотры за последнюю неделю: <span class="product-page__orders-value">{{ has_seen_for_last_week }}</span></p>
+            <p class="product-page__details_field">Доход: <span class="product-page__orders-value">{{ income }}</span></p>
         </div>
     </div>
 </div>

@@ -56,7 +56,7 @@ goods_urlpatterns = [
 
 admin_urlpatterns = [
     path('', AdminGoodsView.as_view(), name='admin_goods'),
-    path('<int:pk>/', AdminSingleGoodView.as_view(), name='admin_goods-detail'),
+        path('<int:pk>/', AdminSingleGoodView.as_view(), name='admin_goods-detail'),
 ]
 
 urlpatterns = [

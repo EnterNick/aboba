@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="admin-product-list">
+    <h1 class="admin-product-list__title">Управление товарами</h1>
+    <div class="admin-product-list__grid">
+        {% for product in results %}
+            <div class="admin-product-list__item">
+                <a href="{% url 'admin_goods-detail' pk=product.id %}">
+                    <div class="admin-product-list__image">
+                        <img src="{{ product.image }}" alt="{{ product.title }}" class="admin-product-list__image-img">
+                    </div>
+                    <div class="admin-product-list__details">
+                        <h2 class="admin-product-list__item-title">{{ product.title }}</h2>
+                        <p class="admin-product-list__item-price">Цена: <span class="admin-product-list__price-value">{{ product.price }} руб.</span></p>
+                        <p class="admin-product-list__item-quantity">Осталось: <span class="admin-product-list__quantity-value">{{ product.value }}</span></p>
+                        <a href="{% url 'edit_good' pk=product.id %}" class="form__btn">Редактировать</a>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -401,13 +401,6 @@ a {
             box-shadow: 0 2px 5px $color-shadow; 
         }
     }
-    
-    &__quantity,
-    &__category,
-    &__orders {
-        margin-bottom: 10px;
-        color: $color-gray; 
-    }
 
     &__details {
         flex: 2; 
@@ -416,6 +409,11 @@ a {
             margin-bottom: 15px;
             font-size: 1.2rem;
             color: $color-gray; 
+        }
+
+        &_field {
+            margin-bottom: 10px;
+            color: $color-gray;
         }
 
         &_price {
@@ -725,5 +723,63 @@ a {
         &-full {
             left: 50vw;
         }
+    }
+}
+
+.admin-product-list {
+    padding: 20px;
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    &__title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 30px;
+    }
+
+    &__item {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f9f9f9;
+        min-height: 350px;
+        transition: all 0.5s ease-in-out;
+
+        &:hover {
+            transform: scale(1.1);
+            background-color: #e0e0e0; 
+        }
+
+        &-title {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        &-price,
+        &-quantity {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+    }
+
+    &__image {
+        &-img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    &__actions {
+        margin-top: 10px;
     }
 }

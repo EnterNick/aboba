@@ -21,3 +21,5 @@ class CustomUser(AbstractUser):
         'password',
         'first_name',
     ]
+
+    is_seller = models.BooleanField(default=False)

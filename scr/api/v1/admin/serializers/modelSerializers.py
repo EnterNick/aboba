@@ -14,7 +14,6 @@ class GoodAdminSerializer(serializers.ModelSerializer):
 
         exclude = [
             'owner',
-            'orders',
             'date_created',
             'cart',
         ]

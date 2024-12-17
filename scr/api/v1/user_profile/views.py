@@ -34,7 +34,7 @@ class UserProfileView(RetrieveAPIView):
     def get_serializer_class(self):
         return (
             self.serializer_class
-            if not self.request.user.is_staff
+            if not self.request.user.is_seller
             else StaffUserSerializer
         )
 
