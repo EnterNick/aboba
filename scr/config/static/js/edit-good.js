@@ -58,25 +58,11 @@ preQuanity.textContent = quanity.value
 preCategory.textContent = category.value
 
 
-const modal = document.querySelector('.modal')
-const modalBtn = document.querySelector('#modal-delete-btn')
-const modalBtnClose = document.querySelector('#modal-delete-btn-close')
-const body = document.querySelector('body')
 
-modal.style.display = 'none'
-
-modalBtn.onclick = function () {
-    modal.style.display = 'flex'
-    body.style.overflow = 'hidden'
-}
-
-modalBtnClose.onclick = function () {
-    modal.style.display = 'none'
-    body.style.overflow = 'scroll'
-}
 
 
 const preview = document.querySelector('.preview')
+
 preview.addEventListener('click', function () {
     preview.classList.toggle('preview__activate-full')
 })

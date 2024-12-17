@@ -12,6 +12,7 @@ from .catalog.views import (
     CreateGoodView,
     AddToCartView,
     SingleGoodEditView,
+    MainPage,
 )
 from .user_auth.views import UserRegistrationView, LoginView, LogoutView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
@@ -56,4 +57,5 @@ urlpatterns = [
     path('users/', include(user_urlpatterns)),
     path('catalog/', include(goods_urlpatterns)),
     path('profile/', include(profile_urlpatterns)),
+    path('main/', MainPage.as_view(), name='main'),
 ]

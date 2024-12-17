@@ -23,7 +23,8 @@ class GoodAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).filter(owner=request.user)
 
-    def conversion_level(self, obj):
+    @staticmethod
+    def conversion_level(obj):
         try:
             return str(round(obj.orders / obj.has_seen, 3) * 100) + '%'
         except ZeroDivisionError:

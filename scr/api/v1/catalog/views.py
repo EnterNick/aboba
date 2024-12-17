@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from apps.catalog.models import Good, Order, Category
 from django.shortcuts import redirect
 from django_filters import FilterSet, RangeFilter, ChoiceFilter
@@ -74,6 +76,7 @@ class CreateGoodView(CreateAPIView):
     template_name = 'catalog/create-good.html'
 
     def get(self, request, *args, **kwargs):
+        self.check_object_permissions(request, self.request.user)
         return Response(
             data={'categories': Category.objects.values_list('title', flat=True)},
             template_name=self.template_name,
@@ -155,3 +158,19 @@ class AddToCartView(CreateAPIView):
         except Exception:
             super().post(request, *args, **kwargs)
         return redirect('user_cart', permanent=True)
+
+
+class MainPage(ListAPIView):
+    queryset = Good.objects.all()
+    serializer_class = GoodSerializer
+
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/catalog.html'
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(self, request, *args, **kwargs)
+        response.data['user'] = get_user(request)
+        return response
+
+    def get_queryset(self):
+        return self.queryset.filter(date_created__range=(datetime.today() - timedelta(weeks=1), datetime.today())).order_by('-orders')
