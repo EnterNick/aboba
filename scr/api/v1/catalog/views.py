@@ -169,8 +169,14 @@ class MainPage(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         response = super().get(self, request, *args, **kwargs)
+        response.data['data'] = {'results': response.data['results']}
         response.data['user'] = get_user(request)
         return response
 
     def get_queryset(self):
-        return self.queryset.filter(date_created__range=(datetime.today() - timedelta(weeks=1), datetime.today())).order_by('-orders')
+        return self.queryset.filter(
+            date_created__range=(
+                datetime.today() - timedelta(weeks=1),
+                datetime.today(),
+            )
+        ).order_by('-orders')

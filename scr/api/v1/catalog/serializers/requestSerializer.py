@@ -77,3 +77,13 @@ class FilterSerializer(serializers.Serializer):
     search = serializers.CharField(
         default='',
     )
+
+    ordering = serializers.ChoiceField(
+        choices=[
+            ('title', 'От А до Я'),
+            ('-title', 'От Я до А'),
+            ('price', 'Цена 🠕'),
+            ('-price', 'Цена 🠗'),
+            ('-date_created', 'Новинки'),
+        ]
+    )

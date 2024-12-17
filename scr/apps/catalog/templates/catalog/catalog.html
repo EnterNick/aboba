@@ -24,7 +24,7 @@
                         <label for="category">Категория:</label>
                         <select name="category" id="category">
                             <option value="">Выберите категорию</option>
-                            {% for i in  filter.category.choices.items %}
+                            {% for i in filter.category.choices.items %}
                                 <option {% if filter.category.value == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
                             {% endfor %}
                         </select>
@@ -35,6 +35,12 @@
         </div>
         <input type="search" name="search" value="{{ filter.search.value }}">
         <button type="submit">Искать</button>
+        <select name="ordering" id="ordering" onchange="document.querySelector('.form').submit()">
+            <option value="">🠕🠗</option>
+            {% for i in filter.ordering.choices.items %}
+                <option {% if filter.ordering.value == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
+            {% endfor %}
+        </select>
     </form>
 
     <h1 class="products__title">Товары</h1>
