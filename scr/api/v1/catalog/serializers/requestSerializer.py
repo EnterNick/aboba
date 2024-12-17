@@ -75,7 +75,8 @@ class FilterSerializer(serializers.Serializer):
     except Exception:
         pass
     search = serializers.CharField(
-        default='',
+        default='a',
+        initial='a',
     )
 
     ordering = serializers.ChoiceField(

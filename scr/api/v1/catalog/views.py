@@ -62,6 +62,7 @@ class GoodsView(ListAPIView):
             data={
                 'data': super().get(self, request, *args, **kwargs).data,
                 'filter': filter_serializer,
+                'filter_data': filter_serializer.data,
                 'user': get_user(request),
             },
             template_name=self.template_name,

@@ -14,18 +14,18 @@
                 <fieldset>
                     <div class="form-group">
                         <label for="price_min">Минимальная цена:</label>
-                        <input type="number" id="price_min" name="price_min" value="{{ filter.price_min.value }}">
+                        <input type="number" id="price_min" name="price_min" value="{{ filter_data.price_min }}">
                     </div>
                     <div class="form-group">
                         <label for="price_max">Максимальная цена:</label>
-                        <input type="number" name="price_max" id="price_max" value="{{ filter.price_max.value }}">
+                        <input type="number" name="price_max" id="price_max" value="{{ filter_data.price_max }}">
                     </div>
                     <div class="form-group">
                         <label for="category">Категория:</label>
                         <select name="category" id="category">
                             <option value="">Выберите категорию</option>
                             {% for i in filter.category.choices.items %}
-                                <option {% if filter.category.value == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
+                                <option {% if filter_data.category == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -33,12 +33,12 @@
                 </fieldset>
             </div>
         </div>
-        <input type="search" name="search" value="{{ filter.search.value }}">
+        <input type="search" name="search" value="{{ filter_data.search }}">
         <button type="submit">Искать</button>
         <select name="ordering" id="ordering" onchange="document.querySelector('.form').submit()">
             <option value="">🠕🠗</option>
             {% for i in filter.ordering.choices.items %}
-                <option {% if filter.ordering.value == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
+                <option {% if filter_data.ordering == i.0 %} selected {% endif %} value="{{i.0}}">{{i.1}}</option>
             {% endfor %}
         </select>
     </form>
