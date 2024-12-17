@@ -19,7 +19,7 @@
                 </ul>
             </nav>
             <div class="header__nav__actions">
-                {% if not user.is_authenticated or user == 'none' %}
+                {% if not user_instance.is_authenticated or user_instance == 'none' %}
                     <a href="{% url 'login' %}" class="header__nav__actions-link">Войти</a>
                     <a href="{% url 'registration' %}" class="header__nav__actions-link header__nav__actions-link--primary">Зарегистрироваться</a>
                 {% else %}
@@ -29,8 +29,9 @@
                     <a href="{% url 'user_cart' %}" class="header__nav__actions-link">
                         <img src="{% static 'img/cart.png' %}" alt="Корзина" class="header__nav__actions-link-icon">
                     </a>
-                    {% if user.is_staff %}
+                    {% if user.is_seller %}
                         <a href="{% url 'add_good' %}" class="header__nav__actions-link">Добавить товар</a>
+                        <a href="{% url 'admin_goods' %}" class="header__nav__actions-link">Аналитика</a>
                     {% endif %}
                     <form action="{% url 'logout' %}" method="post">
                         <button type="submit" class="header__nav__actions-link">Выход</button>

@@ -5,7 +5,7 @@ class IsStaff(IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         status = super().has_object_permission(request, view, obj)
 
-        return status and request.user.is_staff
+        return status and request.user.is_seller
 
 
 class IsOwner(IsStaff):

@@ -16,6 +16,7 @@ from .catalog.views import (
 )
 from .user_auth.views import UserRegistrationView, LoginView, LogoutView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
+from .admin.views import AdminGoodsView, AdminSingleGoodView
 
 user_urlpatterns = [
     path('registration/', UserRegistrationView.as_view(), name='registration'),
@@ -53,9 +54,15 @@ goods_urlpatterns = [
     path('<int:pk>/add-to-cart/', AddToCartView.as_view(), name='add_to_cart'),
 ]
 
+admin_urlpatterns = [
+    path('', AdminGoodsView.as_view(), name='admin_goods'),
+        path('<int:pk>/', AdminSingleGoodView.as_view(), name='admin_goods-detail'),
+]
+
 urlpatterns = [
     path('users/', include(user_urlpatterns)),
     path('catalog/', include(goods_urlpatterns)),
     path('profile/', include(profile_urlpatterns)),
+    path('analytics/', include(admin_urlpatterns)),
     path('main/', MainPage.as_view(), name='main'),
 ]

@@ -41,6 +41,7 @@ TEMPLATES = [
             BASE_DIR / 'apps/user_profile/templates/',
             BASE_DIR / 'apps/user_auth/templates/',
             BASE_DIR / 'apps/catalog/templates/',
+            BASE_DIR / 'apps/admin/templates/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
