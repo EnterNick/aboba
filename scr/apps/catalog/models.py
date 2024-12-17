@@ -64,4 +64,4 @@ class VisitsPerWeek(models.Model):
 
     value = models.IntegerField(default=0)
 
-    good = models.OneToOneRel('good', Good, 'good',)
+    good = models.ForeignKey(Good, on_delete=models.CASCADE)

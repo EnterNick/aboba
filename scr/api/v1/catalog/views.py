@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 
-from apps.catalog.models import Good, Order, Category
+from apps.catalog.models import Good, Order, Category, VisitsPerWeek
 from django.shortcuts import redirect
+from django.urls import include
 from django_filters import FilterSet, RangeFilter, ChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
@@ -130,6 +131,19 @@ class SingleGoodView(RetrieveAPIView):
 
         instance = self.get_object()
         if instance.owner != request.user:
+
+            visits = VisitsPerWeek.objects.filter(good=instance)
+            visits_instance = visits.first()
+            if not visits or visits_instance.date_crated <= (datetime.today() - timedelta(weeks=1)):
+                try:
+                    visits_instance.delete()
+                except AttributeError:
+                    pass
+                VisitsPerWeek.objects.create(good=instance)
+            else:
+                visits_instance.value += 1
+                visits_instance.save()
+
             instance.has_seen += 1
             instance.save()
 
