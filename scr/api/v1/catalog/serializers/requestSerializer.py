@@ -75,5 +75,16 @@ class FilterSerializer(serializers.Serializer):
     except Exception:
         pass
     search = serializers.CharField(
-        default='',
+        default='a',
+        initial='a',
+    )
+
+    ordering = serializers.ChoiceField(
+        choices=[
+            ('title', 'От А до Я'),
+            ('-title', 'От Я до А'),
+            ('price', 'Цена 🠕'),
+            ('-price', 'Цена 🠗'),
+            ('-date_created', 'Новинки'),
+        ]
     )

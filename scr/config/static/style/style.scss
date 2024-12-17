@@ -232,6 +232,10 @@ a {
                     display: inline-block;
                     width: 24px;
                     height: 24px;
+                    
+                    &-profile {
+                        border-radius: 50%;
+                    }
                 }
             }
         }
@@ -259,6 +263,26 @@ a {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 40px;
+    }
+
+    &__filters {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: $color-shadow;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 52;
+
+        &-close {
+            float: right;
+            position: relative;
+            bottom: 10px;
+            cursor: pointer;
+        }
     }
 
     &__product {
@@ -680,7 +704,7 @@ a {
 
 .preview {
     position: absolute;
-    right: -52%;
+    left: 97vw;
     top: 80px;
     flex-direction: column;
     gap: 50px; 
@@ -691,14 +715,15 @@ a {
     justify-content: center;
     height: 100%;
     border-left: 1px solid $color-gray-dark;
-    transition: right 2s ease-in-out;
+    transition: all 1s ease-in-out;
     z-index: 1;
+    width: 50%;
 
     &__activate {
-        right: -40%;
+        left: 90vw;
 
         &-full {
-            right: 0;
+            left: 50vw;
         }
     }
 }

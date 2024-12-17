@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from .models import Good, Category
+from .models import Good, Category, VisitsPerWeek
 
 admin.site.register(Category)
+admin.site.register(VisitsPerWeek)
 
 
 @admin.register(Good)
@@ -23,7 +24,8 @@ class GoodAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).filter(owner=request.user)
 
-    def conversion_level(self, obj):
+    @staticmethod
+    def conversion_level(obj):
         try:
             return str(round(obj.orders / obj.has_seen, 3) * 100) + '%'
         except ZeroDivisionError:

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-
-{% block title %}Добавить товар{% endblock %}
+{% load static %}
 
 {% block content %}
 <form class="form" method="POST" enctype="multipart/form-data">
@@ -44,8 +43,8 @@
 
 <br>
 
-<h2 class="form__title">Предпросмотр</h2>
-<div style="display: flex; gap: 20px; align-items: start; margin-bottom: 50px;">
+<div class="preview">
+    <h2 class="form__title">Предпросмотр</h2>
     <div class="product-page">
         <div class="product-page__header">
             <h1 class="product-page__title"></h1>
@@ -70,91 +69,10 @@
             </div>
         </div>
     </div>
-
-    <div class="products__product">
-        <div class="products__product__header">
-            <img class="products__product__image" src="" alt="img">
-            <h2 class="products__product__title"></h2>
-        </div>
-        <div class="products__product__body">
-            <p class="products__product__description"></p>
-            <p class="products__product__price">
-                Цена: <span class="products__product__price-value"> руб.</span>
-            </p>
-            <p class="products__product__quantity">Осталось: <span class="products__product__quanity-value"></span> </p>
-            <p class="products__product__category">Категория: <span class="products__product__category-value"></span></p>
-            <p class="products__product__orders">Заказов: <span class="products__product__orders-value"></span></p>
-        </div>
-    </div>
 </div>
 
 
-<script>
-    const price = document.querySelector('#price')
-    const prePrice = document.querySelector('.product-page__price-value')
-    const prePrices = document.querySelector('.products__product__price-value')
-
-    const description = document.querySelector('#description')
-    const preDesc = document.querySelector('.product-page__details_description')
-    const preDescs = document.querySelector('.products__product__description')
-
-    const title = document.querySelector('#title')
-    const preTitle = document.querySelector('.product-page__title')
-    const preTitles = document.querySelector('.products__product__title')
-
-    const quanity = document.querySelector('#value')
-    const preQuanity = document.querySelector('.product-page__quantity-value')
-    const preQuanity_second = document.querySelector('.products__product__quanity-value')
-
-    const category = document.querySelector('#category')
-    const preCategory = document.querySelector('.product-page__category-value')
-    const preCategories = document.querySelector('.products__product__category-value')
-
-    const preImage = document.querySelector('.product-page__image-img')
-    const preImages = document.querySelector('.products__product__image')
-
-    price.addEventListener('change', function () {
-            prePrice.textContent = price.value + ' руб.'
-            prePrices.textContent = price.value + ' руб.'
-        }
-    )
-    title.addEventListener('change', function () {
-            preTitle.textContent = title.value
-            preTitles.textContent = title.value
-        }
-    )
-    description.addEventListener('change', function () {
-            preDesc.textContent = description.value
-            preDescs.textContent = description.value
-        }
-    )
-    quanity.addEventListener('change', function () {
-            preQuanity.textContent = quanity.value
-            preQuanity_second.textContent = quanity.value
-        }
-    )
-    category.addEventListener('change', function () {
-            preCategory.textContent = category.value
-            preCategories.textContent = category.value
-        }
-    )
-
-    function imagePreview () {
-        const image = document.querySelector("#image").files[0];
-        const reader = new FileReader();
-
-        reader.addEventListener(
-            'load',
-            function () {
-                preImage.src = reader.result;
-                preImages.src = reader.result;
-            }
-        )
-        if (image) {
-            reader.readAsDataURL(image);
-        }
-    }
-
+<script src="{% static 'js/create-good.js' %}">
 </script>
 
 {% endblock %}

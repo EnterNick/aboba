@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.template.defaultfilters import default
 
 
 class Category(models.Model):
@@ -56,3 +57,11 @@ class Order(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     value = models.IntegerField(default=1)
+
+
+class VisitsPerWeek(models.Model):
+    date_crated = models.DateTimeField(default=datetime.today)
+
+    value = models.IntegerField(default=0)
+
+    good = models.ForeignKey(Good, on_delete=models.CASCADE)

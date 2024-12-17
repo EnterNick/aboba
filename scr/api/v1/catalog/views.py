@@ -1,5 +1,8 @@
-from apps.catalog.models import Good, Order, Category
+from datetime import datetime, timedelta
+
+from apps.catalog.models import Good, Order, Category, VisitsPerWeek
 from django.shortcuts import redirect
+from django.urls import include
 from django_filters import FilterSet, RangeFilter, ChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
@@ -60,6 +63,7 @@ class GoodsView(ListAPIView):
             data={
                 'data': super().get(self, request, *args, **kwargs).data,
                 'filter': filter_serializer,
+                'filter_data': filter_serializer.data,
                 'user': get_user(request),
             },
             template_name=self.template_name,
@@ -74,6 +78,7 @@ class CreateGoodView(CreateAPIView):
     template_name = 'catalog/create-good.html'
 
     def get(self, request, *args, **kwargs):
+        self.check_object_permissions(request, self.request.user)
         return Response(
             data={'categories': Category.objects.values_list('title', flat=True)},
             template_name=self.template_name,
@@ -126,6 +131,19 @@ class SingleGoodView(RetrieveAPIView):
 
         instance = self.get_object()
         if instance.owner != request.user:
+
+            visits = VisitsPerWeek.objects.filter(good=instance)
+            visits_instance = visits.first()
+            if not visits or visits_instance.date_crated <= (datetime.today() - timedelta(weeks=1)):
+                try:
+                    visits_instance.delete()
+                except AttributeError:
+                    pass
+                VisitsPerWeek.objects.create(good=instance)
+            else:
+                visits_instance.value += 1
+                visits_instance.save()
+
             instance.has_seen += 1
             instance.save()
 
@@ -155,3 +173,25 @@ class AddToCartView(CreateAPIView):
         except Exception:
             super().post(request, *args, **kwargs)
         return redirect('user_cart', permanent=True)
+
+
+class MainPage(ListAPIView):
+    queryset = Good.objects.all()
+    serializer_class = GoodSerializer
+
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'catalog/catalog.html'
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(self, request, *args, **kwargs)
+        response.data['data'] = {'results': response.data['results']}
+        response.data['user'] = get_user(request)
+        return response
+
+    def get_queryset(self):
+        return self.queryset.filter(
+            date_created__range=(
+                datetime.today() - timedelta(weeks=1),
+                datetime.today(),
+            )
+        ).order_by('-orders')
