@@ -8,8 +8,8 @@
     <h1 class="products__title">Товары</h1>
     
     <div class="products__wrapper">
-        {% if data.results %}
-            {% for product in data.results %}
+        {% if results %}
+            {% for product in results %}
                 <a class="products__product" href="{% url 'good' product.id %}">
                     <div class="products__product__header">
                         <img class="products__product__image" src="{{ product.image }}" alt="{{ product.title }}">
@@ -34,14 +34,14 @@
 
 <div class="pagination">
     <div class="step-links">
-        {% if data.previous != null %}
+        {% if previous %}
             <a class="pagination__link" href="?page=1">&laquo; Первая</a>
-            <a class="pagination__link" href="{{ data.previous }}">Предыдущая</a>
+            <a class="pagination__link" href="{{ previous }}">Предыдущая</a>
         {% endif %}
 
-        {% if data.next != null %}
-            <a class="pagination__link" href="{{ data.next }}">Следующая</a>
-            <a class="pagination__link" href="{{ data.next }}">Последняя &raquo;</a>
+        {% if next %}
+            <a class="pagination__link" href="{{ next }}">Следующая</a>
+            <a class="pagination__link" href="{{ next }}">Последняя &raquo;</a>
         {% endif %}
     </div>
 </div>

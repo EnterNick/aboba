@@ -57,7 +57,10 @@ class MainPageGoodSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_has_seen_last_week(good):
-        return VisitsPerWeek.objects.get(good=good).value
+        try:
+            return VisitsPerWeek.objects.get(good=good).value
+        except Exception:
+            return 0
 
     @property
     def data(self):

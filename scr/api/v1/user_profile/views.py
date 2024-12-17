@@ -23,7 +23,7 @@ class UserProfileView(RetrieveAPIView):
         return Response(
             data={
                 'instance': super().get(self, request, *args, **kwargs).data,
-                'user': get_user(request),
+                'user_instance': get_user(request),
             },
             template_name=self.template_name,
         )
@@ -48,6 +48,13 @@ class UserCartView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        response.data['user_instance'] = get_user(request)
+        return response
+
 
     def post(self, request, *args, **kwargs):
         cart = self.get_object().cart.all()
