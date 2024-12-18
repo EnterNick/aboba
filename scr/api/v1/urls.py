@@ -4,7 +4,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from .admin.views import AdminGoodsView, AdminSingleGoodView
 from .catalog.views import (
@@ -18,6 +18,7 @@ from .catalog.views import (
 from .feedback.views import FeedbackView
 from .user_auth.views import UserRegistrationView, LoginView, LogoutView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
+from .support_chat.consumers import ChatConsumer
 
 user_urlpatterns = [
     path('registration/', UserRegistrationView.as_view(), name='registration'),
@@ -61,6 +62,10 @@ admin_urlpatterns = [
 ]
 
 feedback_urlpatterns = [path('', FeedbackView.as_view(), name='feedback')]
+
+websocket_urlpatterns = [
+    re_path(r"ws/msg/(?P<pk>\d+)/$", ChatConsumer.as_asgi()),
+]
 
 urlpatterns = [
     path('users/', include(user_urlpatterns)),
