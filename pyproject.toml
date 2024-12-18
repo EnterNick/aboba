@@ -13,6 +13,9 @@ pillow = "^11.0.0"
 djangorestframework-simplejwt = "^5.3.1"
 django-filter = "^24.3"
 ruff = "^0.8.3"
+django-channels = "^0.7.0"
+daphne = "^4.1.2"
+channels = "^4.2.0"
 
 
 [build-system]

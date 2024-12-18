@@ -116,3 +116,15 @@ EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 STATICFILES_DIRS = [BASE_DIR / 'config/static/']
+
+CHANNELS_REDIS_HOST = 'localhost'
+CHANNELS_REDIS_PORT = 6379
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [f"redis://{CHANNELS_REDIS_HOST}:{CHANNELS_REDIS_PORT}/3"],
+        },
+    },
+}
