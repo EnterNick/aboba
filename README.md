@@ -50,8 +50,7 @@
     ```
 
 4. **Выполните миграции базы данных:**
-    ```
-    bash
+    ```bash
     python manage.py migrate
     ```
 

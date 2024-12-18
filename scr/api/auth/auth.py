@@ -28,7 +28,7 @@ class CustomJWTAuthentication(BaseAuthentication):
                     algorithms=['HS256'],
                 )
             except jwt.ExpiredSignatureError:
-                raise None
+                return None
 
             user = get_user_model().objects.filter(id=payload.get('user_id')).first()
             if user is None:

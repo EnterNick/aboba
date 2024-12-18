@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<form class="form" method="POST">
+    {% csrf_token %}
+    <h1 class="form__title">Обратная связь</h1>
+    <fieldset>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="text">Содержание:</label>
+            <textarea id="text" name="text" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="tel">Телефон:</label>
+            <input type="tel" id="tel" name="tel" required>
+        </div>
+        <label>Оставьте нам сообщение и мы свяжемся с вами <br> в ближайшее время по указанной почте</label>
+        <button type="submit">Оставить заявку</button>
+    </fieldset>
+</form>
+
+{% endblock %}

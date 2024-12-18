@@ -1,12 +1,9 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-
-from apps.catalog.models import Good
-
 from api.auth.permissions import IsStaff, IsOwner
 from api.v1.admin.serializers.modelSerializers import GoodAdminSerializer
+from api.v1.utils import get_user
+from apps.catalog.models import Good
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.renderers import TemplateHTMLRenderer
-
-from scr.api.v1.utils import get_user
 
 
 class AdminGoodsView(ListAPIView):

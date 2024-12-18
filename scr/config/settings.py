@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django_filters',
     'apps.user_profile',
     'rest_framework_simplejwt.token_blacklist',
+    'apps.feedback',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
