@@ -6,6 +6,7 @@ from django.contrib.auth.views import (
 )
 from django.urls import path, include
 
+from .admin.views import AdminGoodsView, AdminSingleGoodView
 from .catalog.views import (
     GoodsView,
     SingleGoodView,
@@ -14,9 +15,9 @@ from .catalog.views import (
     SingleGoodEditView,
     MainPage,
 )
+from .feedback.views import FeedbackView
 from .user_auth.views import UserRegistrationView, LoginView, LogoutView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
-from .admin.views import AdminGoodsView, AdminSingleGoodView
 
 user_urlpatterns = [
     path('registration/', UserRegistrationView.as_view(), name='registration'),
@@ -56,13 +57,16 @@ goods_urlpatterns = [
 
 admin_urlpatterns = [
     path('', AdminGoodsView.as_view(), name='admin_goods'),
-        path('<int:pk>/', AdminSingleGoodView.as_view(), name='admin_goods-detail'),
+    path('<int:pk>/', AdminSingleGoodView.as_view(), name='admin_goods-detail'),
 ]
+
+feedback_urlpatterns = [path('', FeedbackView.as_view(), name='feedback')]
 
 urlpatterns = [
     path('users/', include(user_urlpatterns)),
     path('catalog/', include(goods_urlpatterns)),
     path('profile/', include(profile_urlpatterns)),
     path('analytics/', include(admin_urlpatterns)),
+    path('feedback/', include(feedback_urlpatterns)),
     path('main/', MainPage.as_view(), name='main'),
 ]

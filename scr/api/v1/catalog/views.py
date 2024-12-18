@@ -81,7 +81,7 @@ class CreateGoodView(CreateAPIView):
         return Response(
             data={
                 'categories': Category.objects.values_list('title', flat=True),
-                'user_instance': get_user(request)
+                'user_instance': get_user(request),
             },
             template_name=self.template_name,
         )
@@ -190,9 +190,9 @@ class MainPage(ListAPIView):
         response = super().get(self, request, *args, **kwargs)
 
         response.data['results'] = sorted(
-                response.data['results'],
-                key=lambda x: x['has_seen_last_week'],
-                reverse=True,
-            )
+            response.data['results'],
+            key=lambda x: x['has_seen_last_week'],
+            reverse=True,
+        )
         response.data['user_instance'] = get_user(request)
         return response

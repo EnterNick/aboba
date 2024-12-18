@@ -1,7 +1,7 @@
+from apps.catalog.models import Good
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from apps.catalog.models import Good
 from ...catalog.serializers.modelSerializer import GoodSerializer
 
 

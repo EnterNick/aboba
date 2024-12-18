@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta
 
-from rest_framework import serializers
-
 from apps.catalog.models import Good, VisitsPerWeek
+from rest_framework import serializers
 
 
 class GoodAdminSerializer(serializers.ModelSerializer):
