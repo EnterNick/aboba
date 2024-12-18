@@ -15,7 +15,9 @@ class FeedbackView(CreateAPIView):
     template_name = 'feedback/feedback.html'
 
     def get(self, request, *args, **kwargs):
-        return Response(data={'user_instance': get_user(request)}, template_name=self.template_name)
+        return Response(
+            data={'user_instance': get_user(request)}, template_name=self.template_name
+        )
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
