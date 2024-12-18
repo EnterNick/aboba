@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-<form class="form" method="POST" enctype="multipart/form-data">
+<form class="form" method="POST">
     {% csrf_token %}
-    <h1 class="form__title">Добавить товар</h1>
+    <h1 class="form__title">Обратная связь</h1>
     <fieldset>
         <div class="form-group">
             <label for="email">Email:</label>
@@ -22,6 +22,7 @@
             <label for="tel">Телефон:</label>
             <input type="tel" id="tel" name="tel" required>
         </div>
+        <label>Оставьте нам сообщение и мы свяжемся с вами <br> в ближайшее время по указанной почте</label>
         <button type="submit">Оставить заявку</button>
     </fieldset>
 </form>

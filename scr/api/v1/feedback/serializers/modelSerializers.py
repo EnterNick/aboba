@@ -10,3 +10,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'id',
             'user',
         ]
+    
+    def save(self, **kwargs):
+        user = self.context['request'].user
+        return super().save(user=user)
