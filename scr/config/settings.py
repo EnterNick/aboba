@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-^woi_m9+w!de^7+42ss^xexz1g8)n@c*@x7d!22nhs9f6hjjo@'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -43,6 +43,7 @@ TEMPLATES = [
             BASE_DIR / 'apps/user_auth/templates/',
             BASE_DIR / 'apps/catalog/templates/',
             BASE_DIR / 'apps/admin/templates/',
+            BASE_DIR / 'apps/support_chat/templates/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -56,6 +57,7 @@ TEMPLATES = [
     },
 ]
 WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 
 
 DATABASES = {
@@ -122,9 +124,6 @@ CHANNELS_REDIS_PORT = 6379
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [f"redis://{CHANNELS_REDIS_HOST}:{CHANNELS_REDIS_PORT}/3"],
-        },
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
     },
 }

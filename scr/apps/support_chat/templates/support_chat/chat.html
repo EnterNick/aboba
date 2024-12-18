@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="messages" id="messages"></div>
+
+<input id="chat" name="chat">
+<button id="btn">Оставить заявку</button>
+
+
+<script>
+const pk = window.location.pathname.split('/')[2]
+let socket = new WebSocket("ws://localhost:8080/ws/msg/" + pk + "/");
+
+let cookies = document.cookie.split('; ')
+
+for (let i=0; i < cookies.length; i++) {
+    if (cookies[i].split('=')[0] == 'username') {
+        var username = cookies[i].split('=')[1]
+    }
+}
+
+const btn = document.querySelector('#btn')
+const input = document.querySelector('#chat')
+btn.onclick = function () {
+    var outgoingMessage = chat.value;
+    let dict = {};
+    Object.assign(dict, {"message": outgoingMessage, "username": username});
+    socket.send(JSON.stringify(dict).toString());
+}
+
+socket.onmessage = function(event) {
+  var incomingMessage = event.data;
+  showMessage(JSON.parse(incomingMessage));
+};
+
+function showMessage(message) {
+  var messageElem = document.createElement('div');
+  messageElem.classList.add('messages__message')
+  if (username == message['username']) {
+    messageElem.classList.add('messages__message_self')
+  } else {
+    messageElem.classList.add('messages__message_other')
+  }
+  messageElem.appendChild(document.createTextNode(message['message']));
+  document.querySelector('#messages').appendChild(messageElem);
+}
+</script>
+{% endblock %}

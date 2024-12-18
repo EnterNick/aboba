@@ -645,3 +645,30 @@ a {
 .admin-product-list__actions {
   margin-top: 10px;
 }
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 600px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #fff;
+  font-weight: 600;
+}
+.messages__message {
+  display: block;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  max-width: 200px;
+  white-space: pre-wrap;
+}
+.messages__message_self {
+  margin-left: auto;
+  background-color: #6ca735;
+}
+.messages__message_other {
+  margin-right: auto;
+  background-color: #007bff;
+}

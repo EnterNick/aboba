@@ -783,3 +783,33 @@ a {
         margin-top: 10px;
     }
 }
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 600px;
+    border: 1px solid $color-gray-dark;
+    padding: 10px;
+    color: #fff;
+    font-weight: 600;
+
+    &__message {
+        display: block;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        max-width: 200px;
+        white-space: pre-wrap;
+
+        &_self {
+            margin-left: auto;
+            background-color: $color-green;
+        }
+
+        &_other {
+            margin-right: auto;
+            background-color: $color-blue;
+        }
+    }
+}

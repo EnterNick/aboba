@@ -19,6 +19,7 @@ from .feedback.views import FeedbackView
 from .user_auth.views import UserRegistrationView, LoginView, LogoutView
 from .user_profile.views import UserProfileView, UserCartView, UserUpdateView
 from .support_chat.consumers import ChatConsumer
+from .support_chat.views import ChatView
 
 user_urlpatterns = [
     path('registration/', UserRegistrationView.as_view(), name='registration'),
@@ -64,8 +65,10 @@ admin_urlpatterns = [
 feedback_urlpatterns = [path('', FeedbackView.as_view(), name='feedback')]
 
 websocket_urlpatterns = [
-    re_path(r"ws/msg/(?P<pk>\d+)/$", ChatConsumer.as_asgi()),
+    re_path(r'ws/msg/(?P<pk>\d+)/$', ChatConsumer.as_asgi()),
 ]
+
+support_chat_urlpatterns = [path('<int:pk>/', ChatView.as_view(), name='chat')]
 
 urlpatterns = [
     path('users/', include(user_urlpatterns)),
@@ -73,5 +76,6 @@ urlpatterns = [
     path('profile/', include(profile_urlpatterns)),
     path('analytics/', include(admin_urlpatterns)),
     path('feedback/', include(feedback_urlpatterns)),
+    path('chat/', include(support_chat_urlpatterns)),
     path('main/', MainPage.as_view(), name='main'),
 ]

@@ -58,7 +58,8 @@ class GoodsView(ListAPIView):
         filter_serializer = self.filter_serializer_class(data=request.GET)
         if not filter_serializer.is_valid():
             pass
-        return Response(
+
+        response = Response(
             data={
                 'data': super().get(self, request, *args, **kwargs).data,
                 'filter': filter_serializer,
@@ -67,6 +68,8 @@ class GoodsView(ListAPIView):
             },
             template_name=self.template_name,
         )
+        response.set_cookie('username', request.user.username)
+        return response
 
 
 class CreateGoodView(CreateAPIView):
@@ -150,7 +153,6 @@ class SingleGoodView(RetrieveAPIView):
 
             instance.has_seen += 1
             instance.save()
-
         return response
 
 
